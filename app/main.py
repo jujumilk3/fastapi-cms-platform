@@ -1,12 +1,12 @@
-from fastapi import FastAPI, status, Request
+from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
-from app.core.config import config
-from starlette.middleware.cors import CORSMiddleware
 from loguru import logger
-from app.core.exception import CustomHttpException
-from app.api.v1.router import routers as v1_router
+from starlette.middleware.cors import CORSMiddleware
 
+from app.api.v1.router import routers as v1_router
+from app.core.config import config
 from app.core.container import Container
+from app.core.exception import CustomHttpException
 
 
 def create_app():
@@ -35,8 +35,8 @@ def create_app():
 
     @_app.exception_handler(CustomHttpException)
     async def http_exception_handler(
-            request: Request,  # Don't remove it because it is used internally.
-            exc: CustomHttpException,
+        request: Request,  # Don't remove it because it is used internally.
+        exc: CustomHttpException,
     ) -> JSONResponse:
         return JSONResponse(status_code=exc.status_code, content={"title": exc.title, "description": exc.description})
 

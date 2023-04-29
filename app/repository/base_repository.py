@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.exception import AuthError, DuplicatedError, NotFoundError, ForbiddenError
+from app.core.exception import AuthError, DuplicatedError, ForbiddenError, NotFoundError
 
 
 class BaseRepository:
@@ -81,7 +81,9 @@ class BaseRepository:
             if not found_model:
                 raise NotFoundError(detail=f"not found model name: {self._model_name}, requested id: {model_id}")
             if found_model.user_token != user_token:
-                raise ForbiddenError(detail=f"not found update permission: {self._model_name}, requested id: {model_id}")
+                raise ForbiddenError(
+                    detail=f"not found update permission: {self._model_name}, requested id: {model_id}"
+                )
             for key, value in dto.dict().items():
                 if value is None:
                     continue
@@ -104,7 +106,9 @@ class BaseRepository:
             if not found_model:
                 raise NotFoundError(detail=f"not found model name: {self._model_name}, requested id: {model_id}")
             if found_model.user_token != user_token:
-                raise ForbiddenError(detail=f"not found delete permission: {self._model_name}, requested id: {model_id}")
+                raise ForbiddenError(
+                    detail=f"not found delete permission: {self._model_name}, requested id: {model_id}"
+                )
             await session.delete(found_model)
             await session.commit()
 
@@ -114,7 +118,9 @@ class BaseRepository:
             if not found_model:
                 raise NotFoundError(detail=f"not found model name: {self._model_name}, requested id: {model_id}")
             if found_model.user_token != user_token:
-                raise ForbiddenError(detail=f"not found delete permission: {self._model_name}, requested id: {model_id}")
+                raise ForbiddenError(
+                    detail=f"not found delete permission: {self._model_name}, requested id: {model_id}"
+                )
             setattr(found_model, "is_deleted", True)
             await session.merge(found_model)
             await session.commit()

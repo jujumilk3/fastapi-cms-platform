@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import Boolean, Column, DateTime, String
 
 from app.model.base_model import Base

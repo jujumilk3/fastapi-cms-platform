@@ -1,4 +1,5 @@
 import os
+
 import pytest
 
 from app.core.config import config
@@ -11,11 +12,13 @@ if os.getenv("ENV") not in ["test"]:
     pytest.exit(msg)
 
 import asyncio
+
 import pytest_asyncio
+from fastapi.testclient import TestClient
 from loguru import logger
+
 from app.model.base_model import Base
 from tests.utils.router_for_test import router as basic_router_for_test
-from fastapi.testclient import TestClient
 
 
 @pytest.fixture(scope="session")
