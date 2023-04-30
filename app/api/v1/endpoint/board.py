@@ -1,7 +1,7 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, Path, Query, status
 
-from app.core.constant import Order
+from app.core.constant import OrderType
 from app.core.container import Container
 from app.core.dependency import get_current_user_token_no_exception
 from app.model.board import BoardDto
@@ -19,7 +19,7 @@ router = APIRouter(
 async def get_board_list_by_manage_name(
     offset: int = Query(default=0),
     limit: int = Query(default=20),
-    order: Order = Query(default=Order.DESC),
+    order: OrderType = Query(default=OrderType.DESC),
     order_by: str = Query(default="id"),
     board_service: BoardService = Depends(Provide[Container.board_service]),
     user_token: str = Depends(get_current_user_token_no_exception),

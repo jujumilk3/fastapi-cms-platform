@@ -13,6 +13,7 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoint.board",
             "app.api.v1.endpoint.debug",
             "app.api.v1.endpoint.post",
+            "app.api.v1.endpoint.reaction",
         ]
     )
     db = providers.Singleton(Database, db_url=config.DB_URL)
@@ -21,11 +22,13 @@ class Container(containers.DeclarativeContainer):
     board_repository = providers.Factory(repository.BoardRepository, session_factory=db.provided.session_factory)
     user_repository = providers.Factory(repository.UserRepository, session_factory=db.provided.session_factory)
     post_repository = providers.Factory(repository.PostRepository, session_factory=db.provided.session_factory)
+    reaction_repository = providers.Factory(repository.ReactionRepository, session_factory=db.provided.session_factory)
 
     # Base services
     auth_service = providers.Factory(service.AuthService, user_repository=user_repository)
     board_service = providers.Factory(service.BoardService, board_repository=board_repository)
     user_service = providers.Factory(service.UserService, user_repository=user_repository)
     post_service = providers.Factory(service.PostService, post_repository=post_repository)
+    reaction_service = providers.Factory(service.ReactionService, reaction_repository=reaction_repository)
 
     # Integrated services

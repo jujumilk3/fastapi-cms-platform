@@ -4,7 +4,7 @@ from contextlib import AbstractContextManager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.constant import Order
+from app.core.constant import OrderType
 from app.model.board import Board
 from app.repository.base_repository import BaseRepository
 
@@ -18,7 +18,7 @@ class BoardRepository(BaseRepository):
         self,
         offset: int,
         limit: int,
-        order: Order,
+        order: OrderType,
         order_by: str,
     ):
         async with self.session_factory() as session:

@@ -1,4 +1,4 @@
-from app.core.constant import Order
+from app.core.constant import OrderType
 from app.repository.board_repository import BoardRepository
 from app.service.base_service import BaseService
 
@@ -8,7 +8,7 @@ class BoardService(BaseService):
         self.board_repository = board_repository
         super().__init__(board_repository)
 
-    async def get_board_list(self, offset: int, limit: int, order: Order, order_by: str):
+    async def get_board_list(self, offset: int, limit: int, order: OrderType, order_by: str):
         return await self.board_repository.select_board_list(
             offset=offset,
             limit=limit,
