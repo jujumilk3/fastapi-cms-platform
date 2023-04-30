@@ -1,5 +1,6 @@
-from tests.utils.common import create_bearer_token
 from fastapi import status
+
+from tests.utils.common import create_bearer_token
 
 
 def test_crud_post_without_board(client, test_name):
@@ -16,7 +17,7 @@ def test_crud_post_without_board(client, test_name):
             "language": "ko",
             "is_published": True,
             "is_private": False,
-        }
+        },
     )
     created_post_id = response.json()["id"]
     assert response.status_code == status.HTTP_201_CREATED
@@ -49,7 +50,7 @@ def test_crud_post_without_board(client, test_name):
         json={
             "title": f"test post_{test_name}_updated",
             "content": f"test post_{test_name}_updated",
-        }
+        },
     )
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
@@ -62,7 +63,7 @@ def test_crud_post_without_board(client, test_name):
         json={
             "title": f"test post_{test_name}_updated",
             "content": f"test post_{test_name}_updated",
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["title"] == f"test post_{test_name}_updated"
@@ -113,7 +114,7 @@ def test_crud_post_with_board(client, test_name):
             "description": "test board",
             "main_image": "test image",
             "background_image": "test image",
-        }
+        },
     )
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json()["display_name"] == f"test board_{test_name}"
@@ -139,7 +140,7 @@ def test_crud_post_with_board(client, test_name):
             "is_published": True,
             "is_private": False,
             "board_manage_name": created_board_manage_name,
-        }
+        },
     )
     created_post_id = response.json()["id"]
     assert response.status_code == status.HTTP_201_CREATED
@@ -174,7 +175,7 @@ def test_crud_post_with_board(client, test_name):
         json={
             "title": f"test post_{test_name}_updated",
             "content": f"test post_{test_name}_updated",
-        }
+        },
     )
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
@@ -187,7 +188,7 @@ def test_crud_post_with_board(client, test_name):
         json={
             "title": f"test post_{test_name}_updated",
             "content": f"test post_{test_name}_updated",
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["title"] == f"test post_{test_name}_updated"

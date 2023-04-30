@@ -2,7 +2,7 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, status
 
 from app.core.container import Container
-from app.core.dependency import get_current_user_token_no_exception, get_current_user_token
+from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
 from app.model.post import PostDto
 from app.service import BoardService
 from app.service.post_service import PostService
@@ -34,7 +34,11 @@ async def create_post(
 ):
     upsert_post.user_token = user_token
     upsert_post.is_deleted = False
-    found_board = await board_service.get_by_manage_name(manage_name=upsert_post.board_manage_name) if upsert_post.board_manage_name else None
+    found_board = (
+        await board_service.get_by_manage_name(manage_name=upsert_post.board_manage_name)
+        if upsert_post.board_manage_name
+        else None
+    )
     if found_board:
         upsert_post.board_id = found_board.id
     upsert_post.pop("board_manage_name")
@@ -50,9 +54,7 @@ async def update_post(
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_post.user_token = user_token
-    return await post_service.patch_after_check_user_token(
-        model_id=post_id, dto=upsert_post, user_token=user_token
-    )
+    return await post_service.patch_after_check_user_token(model_id=post_id, dto=upsert_post, user_token=user_token)
 
 
 @router.delete("/{post_id}", status_code=status.HTTP_204_NO_CONTENT)

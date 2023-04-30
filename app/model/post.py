@@ -1,9 +1,9 @@
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Boolean, Column, String, Integer
+from sqlalchemy import Boolean, Column, Integer, String
 
 from app.core.constant import Language
-from app.model.base_model import Base, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import Base, CustomPydanticBaseModel, ModelBaseInfoDto
 
 
 class Post(Base):
