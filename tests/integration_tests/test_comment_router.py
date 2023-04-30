@@ -1,5 +1,6 @@
-from tests.utils.common import create_bearer_token
 from fastapi import status
+
+from tests.utils.common import create_bearer_token
 
 
 def test_crud_comment(client, test_name):

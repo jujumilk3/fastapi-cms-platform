@@ -3,7 +3,7 @@ from pydantic.main import BaseModel
 from sqlalchemy import Column
 
 from app.core.constant import ContentType
-from app.model.base_model import ArrayType, Base, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import ArrayType, Base, CustomPydanticBaseModel, ModelBaseInfoDto
 
 
 class Comment(Base):

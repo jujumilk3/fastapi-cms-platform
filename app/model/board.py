@@ -1,7 +1,7 @@
 from pydantic import Field
 from sqlalchemy import Boolean, Column, String
 
-from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import Base, CustomPydanticBaseModel, ListResponseDto, ModelBaseInfoDto
 
 
 class Board(Base):
