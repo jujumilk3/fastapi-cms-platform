@@ -5,7 +5,7 @@ from pydantic.main import BaseModel
 from sqlalchemy import Boolean, Column, DateTime, Integer, String
 
 from app.core.constant import ContentType, ReactionType
-from app.model.base_model import ArrayType, Base, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import ArrayType, Base, CustomPydanticBaseModel, ModelBaseInfoDto
 
 
 class Reaction(Base):
