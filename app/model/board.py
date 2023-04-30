@@ -1,8 +1,7 @@
 from pydantic import Field
-from pydantic.main import BaseModel
 from sqlalchemy import Boolean, Column, String
 
-from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto
+from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto, CustomPydanticBaseModel
 
 
 class Board(Base):
@@ -16,7 +15,7 @@ class Board(Base):
 
 
 class BoardDto:
-    class Base(BaseModel):
+    class Base(CustomPydanticBaseModel):
         display_name: str = Field(default=None, description="board display name", example="free")
         manage_name: str = Field(default=None, description="board manage name for internal managing", example="free")
         is_published: bool = Field(default=None, description="board is published", example=True)
@@ -26,9 +25,6 @@ class BoardDto:
         background_image: str = Field(
             default=None, description="board background image", example="https://image.com/image.png"
         )
-
-        class Config:
-            orm_mode = True
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
         ...
