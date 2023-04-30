@@ -3,7 +3,7 @@ from fastapi import APIRouter, Body, Depends, status
 
 from app.core.container import Container
 from app.core.dependency import get_current_active_user_token
-from app.model.user import AuthDto, User
+from app.model.user import AuthDto, User, UserDto
 from app.service.auth_service import AuthService
 from app.service.user_service import UserService
 
@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.post("/change-password", status_code=status.HTTP_200_OK)
+@router.post("/change-password", response_model=AuthDto.JWTPayload, status_code=status.HTTP_200_OK)
 @inject
 async def change_password(
     old_password: str = Body(..., description="Old password"),
@@ -28,3 +28,14 @@ async def change_password(
         new_password_confirm=new_password_confirm,
         user_token=user_token,
     )
+
+
+@router.patch("/change-profile", status_code=status.HTTP_200_OK)
+@inject
+async def change_profile(
+    self_updatable_attributes: UserDto.SelfUpdatableAttributes,
+    *,
+    user_service: UserService = Depends(Provide[Container.user_service]),
+    user_token: str = Depends(get_current_active_user_token),
+):
+    return await user_service.patch_user_profile_after_check_user_token(self_updatable_attributes, user_token)

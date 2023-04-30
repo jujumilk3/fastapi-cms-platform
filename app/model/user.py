@@ -43,6 +43,10 @@ class UserDto:
     class Upsert(Base):
         ...
 
+    class SelfUpdatableAttributes(Base):
+        nickname: str = Field(default=None, title="nickname", description="nickname")
+        profile_image_url: str = Field(default=None, title="profile_image_url", description="profile_image_url")
+
     class ListResponse(ListResponseDto):
         results: list["UserDto.WithModelBaseInfo"] = Field(default=None, title="items", description="items")
 

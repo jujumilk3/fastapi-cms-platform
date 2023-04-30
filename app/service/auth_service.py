@@ -52,6 +52,10 @@ class AuthService(BaseService):
             raise AuthError(detail="Incorrect old password")
         if new_password != new_password_confirm:
             raise AuthError(detail="New password and new password confirm not match")
-        return await self.user_repository.update(
+        updated_user = await self.user_repository.update(
             found_user.id, UserDto.Upsert(password=get_password_hash(new_password))
         )
+        payload = AuthDto.Payload(**updated_user.dict())
+        token_lifespan = timedelta(seconds=config.JWT_ACCESS_EXPIRE)
+        jwt = create_access_token(payload, token_lifespan)
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
