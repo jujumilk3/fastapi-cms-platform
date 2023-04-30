@@ -1,6 +1,6 @@
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Boolean, Column, String, Integer
+from sqlalchemy import Boolean, Column, Integer, String
 
 from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto
 

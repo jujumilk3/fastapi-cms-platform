@@ -3,7 +3,7 @@ from pydantic.main import BaseModel
 from sqlalchemy import Column, Integer, String
 
 from app.core.constant import ContentType, ReactionType
-from app.model.base_model import Base, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import Base, CustomPydanticBaseModel, ModelBaseInfoDto
 
 
 class Reaction(Base):
