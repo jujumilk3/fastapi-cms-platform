@@ -43,7 +43,9 @@ async def update_reaction(
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_reaction.user_token = user_token
-    return await reaction_service.patch_after_check_user_token(model_id=reaction_id, dto=upsert_reaction, user_token=user_token)
+    return await reaction_service.patch_after_check_user_token(
+        model_id=reaction_id, dto=upsert_reaction, user_token=user_token
+    )
 
 
 @router.delete("/{reaction_id}", status_code=status.HTTP_204_NO_CONTENT)
