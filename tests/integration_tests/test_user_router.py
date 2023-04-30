@@ -100,9 +100,9 @@ def test_change_password(client):
     assert sign_in_response.json()["user_token"]
 
 
-def test_change_profile(client):
+def test_change_profile(client, test_name):
     sign_up_info = {
-        "email": "test@test.com",
+        "email": f"{test_name}@test.com",
         "password": "test",
         "nickname": "test",
     }
@@ -119,13 +119,14 @@ def test_change_profile(client):
     assert sign_up_response.json()["user_token"]
 
     sign_in_info = {
-        "email": "test@test.com",
+        "email": f"{test_name}@test.com",
         "password": "test",
     }
     sign_in_response = client.post(
         "/v1/auth/signin",
         json=sign_in_info,
     )
+    print(sign_in_response.json())
     assert sign_in_response.status_code == status.HTTP_200_OK
     assert AuthDto.JWTPayload(**sign_in_response.json())
     assert sign_in_response.json()["access_token"]
