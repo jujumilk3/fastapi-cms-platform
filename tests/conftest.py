@@ -9,7 +9,7 @@ if os.getenv("ENV") not in ["test"]:
     pytest.exit(msg)
 
 import asyncio
-from app.main import app
+
 import pytest_asyncio
 from fastapi.testclient import TestClient
 from loguru import logger
@@ -17,7 +17,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import config
-
+from app.main import app
 from app.model.base_model import Base
 from app.model.user import User
 from tests.utils.common import read_test_data_from_test_file
