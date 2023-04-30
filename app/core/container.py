@@ -10,6 +10,8 @@ class Container(containers.DeclarativeContainer):
         modules=[
             "app.api.v1.endpoint.admin",
             "app.api.v1.endpoint.auth",
+            "app.api.v1.endpoint.board",
+            "app.api.v1.endpoint.debug",
         ]
     )
     db = providers.Singleton(Database, db_url=config.DB_URL)

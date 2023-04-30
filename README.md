@@ -22,3 +22,7 @@ Basic blog platform built with FastAPI
 ### Comment
 - [ ] CRUD Comment
 - [ ] CRUD Reply
+
+
+### Follow
+- [ ] CRUD Follow
