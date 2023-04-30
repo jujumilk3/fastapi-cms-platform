@@ -67,7 +67,7 @@ def test_board_list_with_params(client, test_name):
         params={
             "offset": 0,
             "limit": 30,
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     for i in range(30):
@@ -81,7 +81,7 @@ def test_board_list_with_params(client, test_name):
             "limit": 30,
             "order_by": "id",
             "order": "asc",
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     for i in range(30):
