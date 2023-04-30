@@ -1,0 +1,57 @@
+[
+    {
+        "email": "normal@mydevenv.com",
+        "password": "normal",
+        "nickname": "normal",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal.jpg",
+        "user_token": "normal",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal2@mydevenv.com",
+        "password": "normal2",
+        "nickname": "normal2",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal2.jpg",
+        "user_token": "normal2",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal3@mydevenv.com",
+        "password": "normal3",
+        "nickname": "normal3",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal3.jpg",
+        "user_token": "normal3",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal4@mydevenv.com",
+        "password": "normal4",
+        "nickname": "normal4",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal4.jpg",
+        "user_token": "normal4",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal5@mydevenv.com",
+        "password": "normal5",
+        "nickname": "normal5",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal5.jpg",
+        "user_token": "normal5",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    }
+]

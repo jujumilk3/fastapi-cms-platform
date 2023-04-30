@@ -8,7 +8,7 @@ Basic blog platform built with FastAPI
 - [x] User login(JWT)
 
 ### Board
-- [ ] CRUD Board
+- [x] CRUD Board by admin
 
 ### Post
 - [ ] CRUD Post
@@ -21,5 +21,4 @@ Basic blog platform built with FastAPI
 
 ### Comment
 - [ ] CRUD Comment
-    ### Reply
-    - [ ] CRUD Reply
+- [ ] CRUD Reply

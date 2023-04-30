@@ -1,0 +1,37 @@
+[
+  {
+    "email": "admin@mydevenv.com",
+    "password": "admin",
+    "nickname": "admin",
+    "profile_image_url": "http://mydevenv.com/images/profiles/admin.jpg",
+    "user_token": "admin",
+    "is_active": true,
+    "is_superuser": true,
+    "is_verified": true,
+    "is_deleted": false
+
+  },
+  {
+    "email": "admin2@mydevenv.com",
+    "password": "admin2",
+    "nickname": "admin2",
+    "profile_image_url": "http://mydevenv.com/images/profiles/admin2.jpg",
+    "user_token": "admin2",
+    "is_active": true,
+    "is_superuser": true,
+    "is_verified": true,
+    "is_deleted": false
+
+  },
+  {
+    "email": "admin3@mydevenv.com",
+    "password": "admin3",
+    "nickname": "admin3",
+    "profile_image_url": "http://mydevenv.com/images/profiles/admin3.jpg",
+    "user_token": "admin3",
+    "is_active": true,
+    "is_superuser": true,
+    "is_verified": true,
+    "is_deleted": false
+  }
+]
