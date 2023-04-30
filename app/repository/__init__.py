@@ -3,6 +3,7 @@ from app.repository.bookmark_repository import BookmarkRepository
 from app.repository.post_repository import PostRepository
 from app.repository.reaction_repository import ReactionRepository
 from app.repository.user_repository import UserRepository
+from app.repository.tag_repository import TagRepository
 
 __all__ = [
     "BoardRepository",
@@ -10,4 +11,5 @@ __all__ = [
     "UserRepository",
     "PostRepository",
     "ReactionRepository",
+    "TagRepository"
 ]

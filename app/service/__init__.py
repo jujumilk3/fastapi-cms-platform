@@ -4,6 +4,7 @@ from app.service.bookmark_service import BookmarkService
 from app.service.post_service import PostService
 from app.service.reaction_service import ReactionService
 from app.service.user_service import UserService
+from app.service.tag_service import TagService
 
 __all__ = [
     "AuthService",
@@ -12,4 +13,5 @@ __all__ = [
     "PostService",
     "ReactionService",
     "UserService",
+    "TagService"
 ]
