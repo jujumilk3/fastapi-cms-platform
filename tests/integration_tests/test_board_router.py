@@ -1,6 +1,8 @@
-from tests.utils.common import create_bearer_token
-from fastapi import status
 import time
+
+from fastapi import status
+
+from tests.utils.common import create_bearer_token
 
 
 def test_board_list_with_params(client, test_name):
@@ -20,7 +22,7 @@ def test_board_list_with_params(client, test_name):
                 "description": "test board",
                 "main_image": "test image",
                 "background_image": "test image",
-            }
+            },
         )
         assert response.status_code == status.HTTP_201_CREATED
 
@@ -38,7 +40,7 @@ def test_board_list_with_params(client, test_name):
         "/v1/board",
         params={
             "limit": 10,
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["offset"] == 0
@@ -51,7 +53,7 @@ def test_board_list_with_params(client, test_name):
         params={
             "limit": 10,
             "offset": 10,
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["offset"] == 10
@@ -77,7 +79,7 @@ def test_board_list_with_order(client):
                 "description": "test board",
                 "main_image": "test image",
                 "background_image": "test image",
-            }
+            },
         )
         time.sleep(1)
         assert response.status_code == status.HTTP_201_CREATED
@@ -101,7 +103,7 @@ def test_board_list_with_order(client):
         params={
             "order_by": "created_at",
             "order": "asc",
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["offset"] == 0

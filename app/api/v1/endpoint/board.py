@@ -25,8 +25,9 @@ async def get_board_list_by_manage_name(
     user_token: str = Depends(get_current_user_token_no_exception),
 ):
     result = await board_service.get_board_list(
-        offset=offset, limit=limit, order=order, order_by=order_by,
+        offset=offset,
+        limit=limit,
+        order=order,
+        order_by=order_by,
     )
-    return BoardDto.ListResponse(
-        results=result, offset=offset, limit=limit, total=len(result)
-    )
+    return BoardDto.ListResponse(results=result, offset=offset, limit=limit, total=len(result))
