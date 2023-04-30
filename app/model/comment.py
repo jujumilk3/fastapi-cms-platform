@@ -1,6 +1,6 @@
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Column, String, Integer, Boolean
+from sqlalchemy import Boolean, Column, Integer, String
 
 from app.core.constant import ContentType
 from app.model.base_model import ArrayType, Base, CustomPydanticBaseModel, ModelBaseInfoDto
