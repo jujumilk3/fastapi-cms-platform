@@ -43,9 +43,7 @@ async def update_tag(
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_tag.user_token = user_token
-    return await tag_service.patch_after_check_user_token(
-        model_id=tag_id, dto=upsert_tag, user_token=user_token
-    )
+    return await tag_service.patch_after_check_user_token(model_id=tag_id, dto=upsert_tag, user_token=user_token)
 
 
 @router.delete("/{tag_id}", status_code=status.HTTP_204_NO_CONTENT)
