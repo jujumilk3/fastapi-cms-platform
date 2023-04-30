@@ -16,7 +16,7 @@ class User(Base):
     is_superuser: bool = Column(Boolean, nullable=False, comment="is_superuser")
     is_verified: bool = Column(Boolean, nullable=False, comment="is_verified")
     is_deleted: bool = Column(Boolean, nullable=False, comment="is_deleted")
-    last_login: datetime = Column(
+    visited_at: datetime = Column(
         DateTime, nullable=False, comment="last_login_at", default=datetime.utcnow, onupdate=datetime.utcnow
     )
 
@@ -34,7 +34,7 @@ class UserDto(BaseModel):
     is_superuser: bool = Field(default=None, title="is_superuser", description="is_superuser")
     is_verified: bool = Field(default=None, title="is_verified", description="is_verified")
     is_deleted: bool = Field(default=None, title="is_deleted", description="is_deleted")
-    last_login: datetime = Field(default=None, title="last_login_at", description="last_login_at")
+    visited_at: datetime = Field(default=None, title="last_login_at", description="last_login_at")
 
 
 class UserBaseInfoDto(BaseModel):

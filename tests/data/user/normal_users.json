@@ -53,5 +53,60 @@
         "is_superuser": false,
         "is_verified": true,
         "is_deleted": false
+    },
+    {
+        "email": "normal6@mydevenv.com",
+        "password": "normal6",
+        "nickname": "normal6",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal6.jpg",
+        "user_token": "normal6",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal7@mydevenv.com",
+        "password": "normal7",
+        "nickname": "normal7",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal7.jpg",
+        "user_token": "normal7",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal8@mydevenv.com",
+        "password": "normal8",
+        "nickname": "normal8",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal8.jpg",
+        "user_token": "normal8",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal9@mydevenv.com",
+        "password": "normal9",
+        "nickname": "normal9",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal9.jpg",
+        "user_token": "normal9",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
+    },
+    {
+        "email": "normal10@mydevenv.com",
+        "password": "normal10",
+        "nickname": "normal10",
+        "profile_image_url": "http://mydevenv.com/images/profiles/normal10.jpg",
+        "user_token": "normal10",
+        "is_active": true,
+        "is_superuser": false,
+        "is_verified": true,
+        "is_deleted": false
     }
 ]
