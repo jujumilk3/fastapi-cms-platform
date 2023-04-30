@@ -2,9 +2,6 @@ import os
 
 import pytest
 
-from app.core.config import config
-from app.main import app
-
 # overwrite ENV and prevent to run pytest from other environments
 os.environ["ENV"] = "test"
 if os.getenv("ENV") not in ["test"]:
@@ -12,12 +9,14 @@ if os.getenv("ENV") not in ["test"]:
     pytest.exit(msg)
 
 import asyncio
-
+from app.main import app
 import pytest_asyncio
 from fastapi.testclient import TestClient
 from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.config import config
 
 from app.model.base_model import Base
 from app.model.user import User
