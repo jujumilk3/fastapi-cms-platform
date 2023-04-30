@@ -17,12 +17,12 @@ import pytest_asyncio
 from fastapi.testclient import TestClient
 from loguru import logger
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.model.base_model import Base
-from tests.utils.router_for_test import router as basic_router_for_test
-from sqlalchemy.ext.asyncio import AsyncSession
-from tests.utils.common import read_test_data_from_test_file
 from app.model.user import User
+from tests.utils.common import read_test_data_from_test_file
+from tests.utils.router_for_test import router as basic_router_for_test
 
 
 @pytest.fixture(scope="session")

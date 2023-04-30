@@ -2,7 +2,7 @@ from pydantic import Field
 from pydantic.main import BaseModel
 from sqlalchemy import Boolean, Column, String
 
-from app.model.base_model import Base, ModelBaseInfoDto, ListResponseDto
+from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto
 
 
 class Board(Base):

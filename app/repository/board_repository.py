@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from contextlib import AbstractContextManager
-from sqlalchemy import select
 
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.constant import Order

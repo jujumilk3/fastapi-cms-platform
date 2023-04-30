@@ -19,4 +19,3 @@ class ContentType(MyStringEnumMixin):
 class Order(MyStringEnumMixin):
     ASC = "asc"
     DESC = "desc"
-

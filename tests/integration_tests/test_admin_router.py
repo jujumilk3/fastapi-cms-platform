@@ -54,7 +54,7 @@ def test_crud_board(client, test_name):
             "description": "test board",
             "main_image": "test image",
             "background_image": "test image",
-        }
+        },
     )
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
@@ -73,7 +73,7 @@ def test_crud_board(client, test_name):
             "description": "test board",
             "main_image": "test image",
             "background_image": "test image",
-        }
+        },
     )
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json()["display_name"] == f"test board_{test_name}"
@@ -110,7 +110,7 @@ def test_crud_board(client, test_name):
         json={
             "display_name": f"test board_{test_name}_updated",
             "manage_name": f"test_board_{test_name}_updated",
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["display_name"] == f"test board_{test_name}_updated"
