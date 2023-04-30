@@ -127,3 +127,106 @@ def test_crud_comment(client, test_name):
     assert response.json()["comment_count"] == 0
 
     # write comment without sign in
+    response = client.post(
+        f"/v1/comment",
+        json={
+            "content_id": created_post_id,
+            "content_type": "post",
+            "content": "test comment",
+        },
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    # write comment
+    response = client.post(
+        f"/v1/comment",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": "post",
+            "content": "test comment",
+        },
+    )
+    created_comment_id = response.json()["id"]
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment"
+    assert response.json()["is_deleted"] is False
+
+    # read comment
+    response = client.get(
+        f"/v1/comment/{created_comment_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment"
+    assert response.json()["is_deleted"] is False
+
+    # update comment without sign in
+    response = client.patch(
+        f"/v1/comment/{created_comment_id}",
+        json={
+            "content": "test comment updated",
+        },
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    # update comment with other user
+    response = client.patch(
+        f"/v1/comment/{created_comment_id}",
+        headers={
+            "Authorization": normal_user_bearer_token2,
+        },
+        json={
+            "content": "test comment updated",
+        },
+    )
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    # update comment
+    response = client.patch(
+        f"/v1/comment/{created_comment_id}",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content": "test comment updated",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment updated"
+    assert response.json()["is_deleted"] is False
+
+    # delete comment without sign in
+    response = client.delete(
+        f"/v1/comment/{created_comment_id}",
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    # delete comment with other user
+    response = client.delete(
+        f"/v1/comment/{created_comment_id}",
+        headers={
+            "Authorization": normal_user_bearer_token2,
+        },
+    )
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    # delete comment
+    response = client.delete(
+        f"/v1/comment/{created_comment_id}",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+
+

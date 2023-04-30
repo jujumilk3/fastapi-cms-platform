@@ -1,21 +1,21 @@
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Column
+from sqlalchemy import Column, String, Integer, Boolean
 
 from app.core.constant import ContentType
 from app.model.base_model import ArrayType, Base, CustomPydanticBaseModel, ModelBaseInfoDto
 
 
 class Comment(Base):
-    user_token: str = Field(nullable=False)
-    content: str = Field(default="", nullable=False)
-    images: list[str] = Field(default="", sa_column=Column(ArrayType()), nullable=False)
-    mention_tokens: list[str] = Field(default=None, sa_column=Column(ArrayType()))
-    parent_comment_id: int = Field(default=None, nullable=True)
-    is_deleted: bool = Field(default=False, nullable=False)
+    user_token: str = Column(String, nullable=False)
+    content: str = Column(String, default="", nullable=False)
+    images: list[str] = Column(ArrayType(), nullable=True)
+    mention_tokens: list[str] = Column(ArrayType(), nullable=True)
+    parent_comment_id: int = Column(Integer, default=None, nullable=True)
+    is_deleted: bool = Column(Boolean, default=False, nullable=False)
 
-    content_id: int = Field(nullable=False)
-    content_type: ContentType = Field(nullable=False)
+    content_id: int = Column(Integer, nullable=False)
+    content_type: ContentType = Column(String, nullable=False)
 
 
 class CommentDto:
@@ -25,7 +25,7 @@ class CommentDto:
         images: list[str] = Field(default=None, description="images", example=["image_url"])
         mention_tokens: list[str] = Field(default=None, description="mention_tokens", example=["mention_token"])
         parent_comment_id: int = Field(default=None, description="parent_comment_id", example=1)
-        is_deleted: bool = Field(default=None, description="is_deleted", example=False)
+        is_deleted: bool = Field(default=False, description="is_deleted", example=False)
         content_id: int = Field(default=None, description="content_id", example=1)
         content_type: ContentType = Field(default=None, description="content_type", example="post")
 
