@@ -4,7 +4,6 @@ from fastapi import APIRouter, Depends, status
 from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
 from app.model.reaction import ReactionDto
-from app.service import BoardService
 from app.service.reaction_service import ReactionService
 
 router = APIRouter(
@@ -29,19 +28,9 @@ async def get_reaction(
 async def create_reaction(
     upsert_reaction: ReactionDto.Upsert,
     reaction_service: ReactionService = Depends(Provide[Container.reaction_service]),
-    board_service: BoardService = Depends(Provide[Container.board_service]),
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_reaction.user_token = user_token
-    upsert_reaction.is_deleted = False
-    found_board = (
-        await board_service.get_by_manage_name(manage_name=upsert_reaction.board_manage_name)
-        if upsert_reaction.board_manage_name
-        else None
-    )
-    if found_board:
-        upsert_reaction.board_id = found_board.id
-    upsert_reaction.pop("board_manage_name")
     return await reaction_service.add(upsert_reaction)
 
 

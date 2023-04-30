@@ -13,6 +13,8 @@ class Post(Base):
     language: Language = Column(String, nullable=False, comment="language")
     like_count: int = Column(Integer, default=0, nullable=False, comment="like_count")
     comment_count: int = Column(Integer, default=0, nullable=False, comment="comment_count")
+
+    is_notice: bool = Column(Boolean, nullable=False, comment="is_notice")
     is_deleted: bool = Column(Boolean, nullable=False, comment="is_deleted")
     is_published: bool = Column(Boolean, nullable=False, comment="is_published")
     is_private: bool = Column(Boolean, nullable=False, comment="is_private")
@@ -26,9 +28,12 @@ class PostDto:
         content: str = Field(default=None, description="post content", example="content")
         user_token: str = Field(default=None, description="user_token", example="user_token")
         language: Language = Field(default=None, description="language", example="ko")
+
+        is_notice: bool = Field(default=False, description="is_notice", example=False)
         is_deleted: bool = Field(default=None, description="is_deleted", example=False)
         is_published: bool = Field(default=None, description="is_published", example=True)
         is_private: bool = Field(default=None, description="is_private", example=False)
+
         board_id: int = Field(default=None, description="board_id", example=1)
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):

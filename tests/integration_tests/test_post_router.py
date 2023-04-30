@@ -4,6 +4,19 @@ from tests.utils.common import create_bearer_token
 
 
 def test_crud_post_without_board(client, test_name):
+    # not signed-in user request
+    response = client.post(
+        "/v1/post",
+        json={
+            "title": f"test post_{test_name}",
+            "content": f"test post_{test_name}",
+            "language": "ko",
+            "is_published": True,
+            "is_private": False,
+        },
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
     # normal user request
     normal_user_bearer_token = create_bearer_token("normal")
     response = client.post(

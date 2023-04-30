@@ -1,11 +1,9 @@
-from datetime import datetime
-
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import Column, Integer, String
 
 from app.core.constant import ContentType, ReactionType
-from app.model.base_model import ArrayType, Base, ModelBaseInfoDto, CustomPydanticBaseModel
+from app.model.base_model import Base, ModelBaseInfoDto, CustomPydanticBaseModel
 
 
 class Reaction(Base):
