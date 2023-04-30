@@ -22,7 +22,7 @@ router_list = [
     post_router,
     reaction_router,
     tag_router,
-    user_router
+    user_router,
 ]
 
 for router in router_list:
