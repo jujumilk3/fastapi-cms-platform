@@ -6,6 +6,8 @@ Basic blog platform built with FastAPI
 ### User
 - [x] User signup
 - [x] User login(JWT)
+- [ ] User change password
+- [ ] User change profile
 
 ### Board
 - [x] CRUD Board by admin

@@ -1,4 +1,4 @@
-from starlette import status
+from fastapi import status
 
 from app.model.user import AuthDto
 

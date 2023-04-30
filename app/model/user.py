@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from sqlalchemy import Boolean, Column, DateTime, String
 
-from app.model.base_model import Base
+from app.model.base_model import Base, CustomPydanticBaseModel, ListResponseDto, ModelBaseInfoDto
 
 
 class User(Base):
@@ -21,20 +21,33 @@ class User(Base):
     )
 
 
-class UserDto(BaseModel):
-    id: int = Field(default=None, title="id", description="id")
-    created_at: datetime = Field(default=None, title="created_at", description="created_at")
-    updated_at: datetime = Field(default=None, title="updated_at", description="updated_at")
-    email: str = Field(default=None, title="email", description="email")
-    password: str = Field(default=None, title="password", description="password")
-    nickname: str = Field(default=None, title="nickname", description="nickname")
-    profile_image_url: str = Field(default=None, title="profile_image_url", description="profile_image_url")
-    user_token: str = Field(default=None, title="user_token", description="user_token")
-    is_active: bool = Field(default=None, title="is_active", description="is_active")
-    is_superuser: bool = Field(default=None, title="is_superuser", description="is_superuser")
-    is_verified: bool = Field(default=None, title="is_verified", description="is_verified")
-    is_deleted: bool = Field(default=None, title="is_deleted", description="is_deleted")
-    visited_at: datetime = Field(default=None, title="last_login_at", description="last_login_at")
+class UserDto:
+    class Base(CustomPydanticBaseModel):
+        id: int = Field(default=None, title="id", description="id")
+        created_at: datetime = Field(default=None, title="created_at", description="created_at")
+        updated_at: datetime = Field(default=None, title="updated_at", description="updated_at")
+        email: str = Field(default=None, title="email", description="email")
+        password: str = Field(default=None, title="password", description="password")
+        nickname: str = Field(default=None, title="nickname", description="nickname")
+        profile_image_url: str = Field(default=None, title="profile_image_url", description="profile_image_url")
+        user_token: str = Field(default=None, title="user_token", description="user_token")
+        is_active: bool = Field(default=None, title="is_active", description="is_active")
+        is_superuser: bool = Field(default=None, title="is_superuser", description="is_superuser")
+        is_verified: bool = Field(default=None, title="is_verified", description="is_verified")
+        is_deleted: bool = Field(default=None, title="is_deleted", description="is_deleted")
+        visited_at: datetime = Field(default=None, title="last_login_at", description="last_login_at")
+
+    class WithModelBaseInfo(ModelBaseInfoDto, Base):
+        ...
+
+    class Upsert(Base):
+        ...
+
+    class ListResponse(ListResponseDto):
+        results: list["UserDto.WithModelBaseInfo"] = Field(default=None, title="items", description="items")
+
+
+UserDto.ListResponse.update_forward_refs()
 
 
 class UserBaseInfoDto(BaseModel):

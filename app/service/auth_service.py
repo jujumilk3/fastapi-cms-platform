@@ -3,7 +3,7 @@ from datetime import timedelta
 from app.core.config import config
 from app.core.exception import AuthError
 from app.core.security import create_access_token, get_password_hash, verify_password
-from app.model.user import AuthDto, User
+from app.model.user import AuthDto, User, UserDto
 from app.repository.user_repository import UserRepository
 from app.service.base_service import BaseService
 from app.util.common import random_hash
@@ -43,3 +43,15 @@ class AuthService(BaseService):
         token_lifespan = timedelta(seconds=config.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
         return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
+
+    async def change_password(self, old_password: str, new_password: str, new_password_confirm: str, user_token: str):
+        found_user = await self.user_repository.select_user_by_user_token(user_token)
+        if not found_user:
+            raise AuthError(detail="User not found")
+        if not verify_password(old_password, found_user.password):
+            raise AuthError(detail="Incorrect old password")
+        if new_password != new_password_confirm:
+            raise AuthError(detail="New password and new password confirm not match")
+        return await self.user_repository.update(
+            found_user.id, UserDto.Upsert(password=get_password_hash(new_password))
+        )

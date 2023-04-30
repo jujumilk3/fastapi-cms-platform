@@ -9,6 +9,7 @@ from app.api.v1.endpoint.debug import router as debug_router
 from app.api.v1.endpoint.post import router as post_router
 from app.api.v1.endpoint.reaction import router as reaction_router
 from app.api.v1.endpoint.tag import router as tag_router
+from app.api.v1.endpoint.user import router as user_router
 
 routers = APIRouter()
 router_list = [
@@ -21,6 +22,7 @@ router_list = [
     post_router,
     reaction_router,
     tag_router,
+    user_router
 ]
 
 for router in router_list:
