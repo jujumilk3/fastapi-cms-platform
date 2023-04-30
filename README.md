@@ -11,7 +11,7 @@ Basic blog platform built with FastAPI
 - [x] CRUD Board by admin
 
 ### Post
-- [ ] CRUD Post
+- [x] CRUD Post
 
 ### Tag
 - [ ] CRUD Tag
