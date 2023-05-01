@@ -1,5 +1,5 @@
 from app.core.constant import ContentType
-from app.model.comment import CommentDto, Comment
+from app.model.comment import Comment, CommentDto
 from app.service import CommentService, PostService, ReactionService, UserService
 
 
