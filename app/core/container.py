@@ -42,3 +42,10 @@ class Container(containers.DeclarativeContainer):
     user_service = providers.Factory(service.UserService, user_repository=user_repository)
 
     # Integrated services
+    blog_integrated_service = providers.Factory(
+        service.BlogIntegratedService,
+        post_service=post_service,
+        comment_service=comment_service,
+        reaction_service=reaction_service,
+        user_service=user_service,
+    )

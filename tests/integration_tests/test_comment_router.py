@@ -67,7 +67,7 @@ def test_crud_comment(client, test_name):
     assert response.json()["is_published"] is True
     assert response.json()["is_private"] is False
     assert response.json()["is_deleted"] is False
-    assert response.json()["like_count"] == 0
+    assert response.json()["reaction_count"] == 0
     assert response.json()["comment_count"] == 0
 
     # other user try to update
@@ -123,7 +123,7 @@ def test_crud_comment(client, test_name):
     assert response.json()["is_published"] is True
     assert response.json()["is_private"] is False
     assert response.json()["is_deleted"] is False
-    assert response.json()["like_count"] == 0
+    assert response.json()["reaction_count"] == 0
     assert response.json()["comment_count"] == 0
 
     # write comment without sign in

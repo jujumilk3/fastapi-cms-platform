@@ -11,7 +11,7 @@ class Post(Base):
     content: str = Column(String, nullable=False, comment="content")
     user_token: str = Column(String, nullable=False, comment="user_token")
     language: Language = Column(String, nullable=False, comment="language")
-    like_count: int = Column(Integer, default=0, nullable=False, comment="like_count")
+    reaction_count: int = Column(Integer, default=0, nullable=False, comment="reaction_count")
     comment_count: int = Column(Integer, default=0, nullable=False, comment="comment_count")
 
     is_notice: bool = Column(Boolean, nullable=False, comment="is_notice")
@@ -37,7 +37,7 @@ class PostDto:
         board_id: int = Field(default=None, description="board_id", example=1)
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
-        like_count: int = Field(default=None, description="like_count", example=0)
+        reaction_count: int = Field(default=None, description="reaction_count", example=0)
         comment_count: int = Field(default=None, description="comment_count", example=0)
 
     class Upsert(Base):

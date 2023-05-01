@@ -5,6 +5,7 @@ from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
 from app.model.comment import CommentDto
 from app.service.comment_service import CommentService
+from app.service.integrated.blog_integrated_service import BlogIntegratedService
 
 router = APIRouter(
     prefix="/comment",
@@ -28,10 +29,11 @@ async def get_comment(
 async def create_comment(
     upsert_comment: CommentDto.Upsert,
     comment_service: CommentService = Depends(Provide[Container.comment_service]),
+    blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_comment.user_token = user_token
-    return await comment_service.add(upsert_comment)
+    return await blog_integrated_service.create_comment_and_update_comment_count(upsert_comment)
 
 
 @router.patch("/{comment_id}", response_model=CommentDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)

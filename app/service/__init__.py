@@ -7,6 +7,8 @@ from app.service.reaction_service import ReactionService
 from app.service.tag_service import TagService
 from app.service.user_service import UserService
 
+from app.service.integrated.blog_integrated_service import BlogIntegratedService
+
 __all__ = [
     "AuthService",
     "BoardService",
@@ -16,4 +18,6 @@ __all__ = [
     "ReactionService",
     "UserService",
     "TagService",
+
+    "BlogIntegratedService"
 ]
