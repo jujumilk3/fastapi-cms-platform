@@ -1,4 +1,4 @@
-# fastapi-blog-platform
+# fastapi-cms-platform
 Basic blog platform built with FastAPI
 
 ## Feature list
