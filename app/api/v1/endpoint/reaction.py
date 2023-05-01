@@ -30,8 +30,8 @@ async def create_reaction(
     reaction_service: ReactionService = Depends(Provide[Container.reaction_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    upsert_reaction.user_token = user_token
-    return await reaction_service.add(upsert_reaction)
+    upsert_reaction_with_user_token = ReactionDto.UpsertWithUserToken(**upsert_reaction.dict(), user_token=user_token)
+    return await reaction_service.add(upsert_reaction_with_user_token)
 
 
 @router.patch("/{reaction_id}", response_model=ReactionDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)
@@ -42,9 +42,9 @@ async def update_reaction(
     reaction_service: ReactionService = Depends(Provide[Container.reaction_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    upsert_reaction.user_token = user_token
+    upsert_reaction_with_user_token = ReactionDto.UpsertWithUserToken(**upsert_reaction.dict(), user_token=user_token)
     return await reaction_service.patch_after_check_user_token(
-        model_id=reaction_id, dto=upsert_reaction, user_token=user_token
+        model_id=reaction_id, dto=upsert_reaction_with_user_token, user_token=user_token
     )
 
 
