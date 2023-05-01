@@ -26,7 +26,6 @@ class PostDto:
     class Base(CustomPydanticBaseModel):
         title: str = Field(default=None, description="post title", example="title")
         content: str = Field(default=None, description="post content", example="content")
-        user_token: str = Field(default=None, description="user_token", example="user_token")
         language: Language = Field(default=None, description="language", example="ko")
 
         is_notice: bool = Field(default=False, description="is_notice", example=False)
@@ -37,11 +36,15 @@ class PostDto:
         board_id: int = Field(default=None, description="board_id", example=1)
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
-        reaction_count: int = Field(default=None, description="reaction_count", example=0)
-        comment_count: int = Field(default=None, description="comment_count", example=0)
+        user_token: str = Field(default=None, description="user_token", example="user_token")
+        reaction_count: int = Field(default=0, description="reaction_count", example=0)
+        comment_count: int = Field(default=0, description="comment_count", example=0)
 
     class Upsert(Base):
         ...
+
+    class UpsertWithUserToken(Upsert):
+        user_token: str = Field(default=None, description="user_token", example="user_token")
 
     class UpsertFeedWithBoardManageName(Upsert):
         board_manage_name: str = Field(default=None, description="board_manage_name", example="free")

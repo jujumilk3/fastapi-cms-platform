@@ -20,7 +20,6 @@ class Comment(Base):
 
 class CommentDto:
     class Base(CustomPydanticBaseModel):
-        user_token: str = Field(default=None, description="user_token", example="user_token")
         content: str = Field(default=None, description="content", example="content")
         images: list[str] = Field(default=None, description="images", example=["image_url"])
         mention_tokens: list[str] = Field(default=None, description="mention_tokens", example=["mention_token"])
@@ -30,10 +29,14 @@ class CommentDto:
         content_type: ContentType = Field(default=None, description="content_type", example="post")
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
-        ...
+        user_token: str = Field(default=None, description="user_token", example="user_token")
+        reaction_count: int = Field(default=None, description="reaction_count", example=1)
 
     class Upsert(Base):
         ...
+
+    class UpsertWithUserToken(Upsert):
+        user_token: str = Field(default=None, description="user_token", example="user_token")
 
     class ListResponse(BaseModel):
         results: list["CommentDto.WithModelBaseInfo"] = Field(default=None, description="items", example=[])

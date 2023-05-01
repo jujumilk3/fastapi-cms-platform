@@ -31,8 +31,8 @@ async def create_comment(
     blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    upsert_comment.user_token = user_token
-    return await blog_integrated_service.create_comment_and_update_comment_count(upsert_comment)
+    upsert_comment_with_user_token = CommentDto.UpsertWithUserToken(**upsert_comment.dict(), user_token=user_token)
+    return await blog_integrated_service.create_comment_and_update_comment_count(upsert_comment_with_user_token)
 
 
 @router.patch("/{comment_id}", response_model=CommentDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)
@@ -43,9 +43,9 @@ async def update_comment(
     comment_service: CommentService = Depends(Provide[Container.comment_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    upsert_comment.user_token = user_token
+    upsert_comment_with_user_token = CommentDto.UpsertWithUserToken(**upsert_comment.dict(), user_token=user_token)
     return await comment_service.patch_after_check_user_token(
-        model_id=comment_id, dto=upsert_comment, user_token=user_token
+        model_id=comment_id, dto=upsert_comment_with_user_token, user_token=user_token
     )
 
 
