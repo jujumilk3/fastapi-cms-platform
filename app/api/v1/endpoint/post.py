@@ -54,7 +54,9 @@ async def update_post(
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_post_with_user_token = PostDto.UpsertWithUserToken(**upsert_post.dict(), user_token=user_token)
-    return await post_service.patch_after_check_user_token(model_id=post_id, dto=upsert_post_with_user_token, user_token=user_token)
+    return await post_service.patch_after_check_user_token(
+        model_id=post_id, dto=upsert_post_with_user_token, user_token=user_token
+    )
 
 
 @router.delete("/{post_id}", status_code=status.HTTP_204_NO_CONTENT)

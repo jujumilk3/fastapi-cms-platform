@@ -1,6 +1,7 @@
+from fastapi import status
+
 from app.core.constant import ReactionType
 from tests.utils.common import create_bearer_token
-from fastapi import status
 
 
 def test_crud_reaction(client, test_name):
@@ -72,5 +73,3 @@ def test_crud_reaction(client, test_name):
     assert response.json()["content_id"] == created_post_id
     assert response.json()["content_type"] == ReactionType.LIKE
     assert response.json()["reaction_type"] == ReactionType.LIKE
-
-
