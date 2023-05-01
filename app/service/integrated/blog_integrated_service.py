@@ -1,5 +1,5 @@
 from app.core.constant import ContentType
-from app.model.comment import CommentDto
+from app.model.comment import CommentDto, Comment
 from app.service import CommentService, PostService, ReactionService, UserService
 
 
@@ -21,3 +21,9 @@ class BlogIntegratedService:
         if created_comment.id and upsert_comment.content_type == ContentType.POST:
             await self.post_service.update_comment_count(created_comment.content_id)
         return created_comment
+
+    async def remove_comment_after_check_user_token_and_update_comment_count(self, comment_id: int, user_token: str):
+        found_comment: Comment = await self.comment_service.get_by_id(comment_id)
+        await self.comment_service.remove_by_id_after_check_user_token(model_id=comment_id, user_token=user_token)
+        if found_comment.content_type == ContentType.POST:
+            await self.post_service.update_comment_count(found_comment.content_id)

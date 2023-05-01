@@ -28,7 +28,6 @@ async def get_comment(
 @inject
 async def create_comment(
     upsert_comment: CommentDto.Upsert,
-    comment_service: CommentService = Depends(Provide[Container.comment_service]),
     blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
@@ -54,7 +53,9 @@ async def update_comment(
 @inject
 async def delete_comment(
     comment_id: int,
-    comment_service: CommentService = Depends(Provide[Container.comment_service]),
+    blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    await comment_service.remove_by_id_after_check_user_token(model_id=comment_id, user_token=user_token)
+    await blog_integrated_service.remove_comment_after_check_user_token_and_update_comment_count(
+        comment_id=comment_id, user_token=user_token
+    )

@@ -480,3 +480,16 @@ def test_comment_count(client, test_name):
         },
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    # read comment
+    response = client.get(
+        f"/v1/comment/{created_comment_id}",
+    )
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    # check post comment num
+    response = client.get(
+        f"/v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["comment_count"] == 0
