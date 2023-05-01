@@ -1,6 +1,6 @@
 from app.core.constant import ContentType
 from app.model.comment import CommentDto
-from app.service import CommentService, ReactionService, UserService, PostService
+from app.service import CommentService, PostService, ReactionService, UserService
 
 
 class BlogIntegratedService:

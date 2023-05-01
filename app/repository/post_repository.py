@@ -1,12 +1,12 @@
 from collections.abc import Callable
 from contextlib import AbstractContextManager
 
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.constant import ContentType
-from app.model.post import Post
 from app.model.comment import Comment
+from app.model.post import Post
 from app.model.reaction import Reaction
 from app.repository.base_repository import BaseRepository
 
@@ -23,7 +23,9 @@ class PostRepository(BaseRepository):
                 select(Comment).filter(Comment.content_id == post_id, Comment.content_type == ContentType.POST).count()
             )
             post.like_count = await session.execute(
-                session.query(Reaction).filter(Reaction.content_id == post_id, Reaction.content_type == ContentType.POST).count()
+                session.query(Reaction)
+                .filter(Reaction.content_id == post_id, Reaction.content_type == ContentType.POST)
+                .count()
             )
             await session.merge(post)
             await session.commit()
@@ -32,9 +34,13 @@ class PostRepository(BaseRepository):
     async def update_comment_count(self, post_id: int):
         async with self.session_factory() as session:
             post = await self.select_by_id(post_id)
-            post.comment_count = (await session.execute(
-                select(func.count(Comment.id)).filter(Comment.content_id == post_id, Comment.content_type == ContentType.POST   )
-            )).scalar()
+            post.comment_count = (
+                await session.execute(
+                    select(func.count(Comment.id)).filter(
+                        Comment.content_id == post_id, Comment.content_type == ContentType.POST
+                    )
+                )
+            ).scalar()
             await session.merge(post)
             await session.commit()
             return post
@@ -43,7 +49,9 @@ class PostRepository(BaseRepository):
         async with self.session_factory() as session:
             post = await self.select_by_id(post_id)
             post.like_count = await session.execute(
-                session.query(Reaction).filter(Reaction.content_id == post_id, Reaction.content_type == ContentType.POST).count()
+                session.query(Reaction)
+                .filter(Reaction.content_id == post_id, Reaction.content_type == ContentType.POST)
+                .count()
             )
             await session.merge(post)
             await session.commit()

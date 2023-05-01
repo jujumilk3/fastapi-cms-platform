@@ -15,4 +15,3 @@ class PostService(BaseService):
 
     async def update_like_count(self, post_id: int):
         return await self.post_repository.update_reaction_count(post_id)
-
