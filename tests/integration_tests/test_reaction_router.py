@@ -1,6 +1,6 @@
 from fastapi import status
 
-from app.core.constant import ReactionType, ContentType
+from app.core.constant import ContentType, ReactionType
 from tests.utils.common import create_bearer_token
 
 
