@@ -1,5 +1,6 @@
-from tests.utils.common import create_user_and_get_token
 from fastapi import status
+
+from tests.utils.common import create_user_and_get_token
 
 
 def test_create_user_and_get_jwt_reaction(client, test_name):
