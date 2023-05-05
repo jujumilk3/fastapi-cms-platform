@@ -1,5 +1,6 @@
 from fastapi import status
 
+from app.core.constant import ContentType, ReactionType
 from tests.utils.common import create_bearer_token
 
 
@@ -529,3 +530,47 @@ def test_comment_count_and_reaction_count(client, test_name):
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["comment_count"] == 1
+
+    # toggle reaction
+    response = client.post(
+        "/v1/reaction/toggle",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": ContentType.POST,
+            "reaction_type": ReactionType.LIKE,
+        },
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == ContentType.POST
+    assert response.json()["reaction_type"] == ReactionType.LIKE
+
+    # check reaction count of post
+    response = client.get(
+        f"v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["reaction_count"] == 1
+
+    response = client.post(
+        "/v1/reaction/toggle",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": ContentType.POST,
+            "reaction_type": ReactionType.LIKE,
+        },
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    # check reaction count of post
+    response = client.get(
+        f"v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["reaction_count"] == 0

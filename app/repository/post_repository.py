@@ -60,7 +60,7 @@ class PostRepository(BaseRepository):
                 Reaction.content_type == ContentType.POST,
             )
             query_result = await session.execute(query)
-            post.like_count = query_result.scalar_one_or_none() or 0
+            post.reaction_count = query_result.scalar_one_or_none() or 0
             await session.merge(post)
             await session.commit()
             return post

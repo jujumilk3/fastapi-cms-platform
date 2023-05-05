@@ -114,6 +114,13 @@ def test_crud_reaction(client, test_name):
     assert response.json()["content_type"] == ContentType.POST
     assert response.json()["reaction_type"] == ReactionType.LIKE
 
+    # check reaction count of post
+    response = client.get(
+        f"v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["reaction_count"] == 1
+
     response = client.post(
         "/v1/reaction/toggle",
         headers={
@@ -126,3 +133,10 @@ def test_crud_reaction(client, test_name):
         },
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    # check reaction count of post
+    response = client.get(
+        f"v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["reaction_count"] == 0

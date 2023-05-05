@@ -15,9 +15,22 @@ class Message(Base):
 
 class MessageDto:
     class Base(BaseModel):
-        from_user_token: str = Field(default=None, description="from_user_token", example="user_token")
         to_user_token: str = Field(default=None, description="to_user_token", example="user_token")
         content: str = Field(default=None, description="content", example="content")
         is_read: bool = Field(default=False, description="is_read", example=False)
         is_deleted: bool = Field(default=False, description="is_deleted", example=False)
 
+    class WithModelBaseInfo(ModelBaseInfoDto, Base):
+        from_user_token: str = Field(default=None, description="from_user_token", example="user_token")
+
+    class Upsert(Base):
+        ...
+
+    class UpsertWithUserToken(Upsert):
+        to_user_token: str = Field(default=None, description="to_user_token", example="user_token")
+
+    class ListResponse(ListResponseDto):
+        results: list["MessageDto.WithModelBaseInfo"] = Field(default=None, description="items", example=[])
+
+
+MessageDto.ListResponse.update_forward_refs()
