@@ -69,7 +69,60 @@ def test_crud_reaction(client, test_name):
             "reaction_type": ReactionType.LIKE,
         },
     )
+    created_reaction_id = response.json()["id"]
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json()["content_id"] == created_post_id
     assert response.json()["content_type"] == ContentType.POST
     assert response.json()["reaction_type"] == ReactionType.LIKE
+
+    # get created reaction
+    response = client.get(
+        f"v1/reaction/{created_reaction_id}",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        }
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["id"] == created_reaction_id
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == ContentType.POST
+    assert response.json()["reaction_type"] == ReactionType.LIKE
+
+    # delete created reaction
+    response = client.delete(
+        f"v1/reaction/{created_reaction_id}",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        }
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    # toggle reaction
+    response = client.post(
+        "/v1/reaction/toggle",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": ContentType.POST,
+            "reaction_type": ReactionType.LIKE,
+        },
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == ContentType.POST
+    assert response.json()["reaction_type"] == ReactionType.LIKE
+
+    response = client.post(
+        "/v1/reaction/toggle",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": ContentType.POST,
+            "reaction_type": ReactionType.LIKE,
+        },
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT

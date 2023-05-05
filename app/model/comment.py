@@ -31,6 +31,7 @@ class CommentDto:
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
         user_token: str = Field(default=None, description="user_token", example="user_token")
         reaction_count: int = Field(default=None, description="reaction_count", example=1)
+        child_comment_count: int = Field(default=None, description="comment_count", example=1)
 
     class Upsert(Base):
         ...

@@ -11,7 +11,6 @@ class Reaction(Base):
     content_id: int = Column(Integer, nullable=False, comment="content_id")
     content_type: ContentType = Column(String, nullable=False, comment="content_type")
     reaction_type: ReactionType = Column(String, nullable=False, comment="reaction_type")
-    unique_key: str = Column(String, nullable=True, unique=True, comment="unique_key")
 
 
 class ReactionDto:
@@ -19,7 +18,6 @@ class ReactionDto:
         content_id: int = Field(default=None, description="content_id", example=1)
         content_type: ContentType = Field(default=None, description="content_type", example="post")
         reaction_type: ReactionType = Field(default=ReactionType.LIKE, description="reaction_type", example="like")
-        unique_key: str = Field(default=None, description="unique_key", example="post_1_like_user_token")
 
     class WithModelBaseInfo(ModelBaseInfoDto, Base):
         user_token: str = Field(default=None, description="user_token", example="user_token")

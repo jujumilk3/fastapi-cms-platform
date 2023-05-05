@@ -250,7 +250,7 @@ def test_crud_post_with_board(client, test_name):
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-def test_comment_count(client, test_name):
+def test_comment_count_and_reaction_count(client, test_name):
     # admin user request
     admin_user_bearer_token = create_bearer_token("admin")
     response = client.post(
@@ -457,6 +457,42 @@ def test_comment_count(client, test_name):
     assert response.json()["content"] == "test comment updated"
     assert response.json()["is_deleted"] is False
 
+    # write 2nd comment
+    response = client.post(
+        f"/v1/comment",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": "post",
+            "content": "test comment",
+        },
+    )
+    created_comment_id = response.json()["id"]
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment"
+    assert response.json()["is_deleted"] is False
+
+    # read comment
+    response = client.get(
+        f"/v1/comment/{created_comment_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment"
+    assert response.json()["is_deleted"] is False
+
+    # check post comment num
+    response = client.get(
+        f"/v1/post/{created_post_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["comment_count"] == 2
+
     # delete comment without sign in
     response = client.delete(
         f"/v1/comment/{created_comment_id}",
@@ -492,4 +528,4 @@ def test_comment_count(client, test_name):
         f"/v1/post/{created_post_id}",
     )
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["comment_count"] == 0
+    assert response.json()["comment_count"] == 1

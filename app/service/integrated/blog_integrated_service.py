@@ -27,3 +27,15 @@ class BlogIntegratedService:
         await self.comment_service.remove_by_id_after_check_user_token(model_id=comment_id, user_token=user_token)
         if found_comment.content_type == ContentType.POST:
             await self.post_service.update_comment_count(found_comment.content_id)
+
+    async def create_reaction_and_update_reaction_count(self, upsert_reaction: CommentDto.Upsert):
+        created_reaction = await self.reaction_service.add(upsert_reaction)
+        if created_reaction.id and upsert_reaction.content_type == ContentType.POST:
+            await self.post_service.update_reaction_count(created_reaction.content_id)
+        return created_reaction
+
+    async def remove_reaction_after_check_user_token_and_update_reaction_count(self, reaction_id: int, user_token: str):
+        found_reaction: Comment = await self.reaction_service.get_by_id(reaction_id)
+        await self.reaction_service.remove_by_id_after_check_user_token(model_id=reaction_id, user_token=user_token)
+        if found_reaction.content_type == ContentType.POST:
+            await self.post_service.update_reaction_count(found_reaction.content_id)
