@@ -1,6 +1,6 @@
 from pydantic import Field
 from pydantic.main import BaseModel
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Boolean, Column, Integer, String
 
 from app.model.base_model import Base, ListResponseDto, ModelBaseInfoDto
 
@@ -20,4 +20,3 @@ class MessageDto:
         content: str = Field(default=None, description="content", example="content")
         is_read: bool = Field(default=False, description="is_read", example=False)
         is_deleted: bool = Field(default=False, description="is_deleted", example=False)
-
