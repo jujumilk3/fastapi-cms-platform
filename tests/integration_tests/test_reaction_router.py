@@ -80,7 +80,7 @@ def test_crud_reaction(client, test_name):
         f"v1/reaction/{created_reaction_id}",
         headers={
             "Authorization": normal_user_bearer_token,
-        }
+        },
     )
     assert response.status_code == status.HTTP_200_OK
     assert response.json()["id"] == created_reaction_id
@@ -93,7 +93,7 @@ def test_crud_reaction(client, test_name):
         f"v1/reaction/{created_reaction_id}",
         headers={
             "Authorization": normal_user_bearer_token,
-        }
+        },
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
 

@@ -1,7 +1,7 @@
-from typing import Union, Any
+from typing import Any, Union
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, status, Response
+from fastapi import APIRouter, Depends, Response, status
 
 from app.core.constant import ContentType
 from app.core.container import Container
