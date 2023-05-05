@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, Response, status
 from app.core.constant import ContentType
 from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
-from app.model.reaction import ReactionDto, Reaction
+from app.model.reaction import Reaction, ReactionDto
 from app.service import PostService
 from app.service.reaction_service import ReactionService
 
