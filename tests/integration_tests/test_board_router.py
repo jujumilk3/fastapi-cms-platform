@@ -1,5 +1,3 @@
-import time
-
 from fastapi import status
 
 from tests.utils.common import create_bearer_token

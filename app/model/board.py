@@ -33,7 +33,7 @@ class BoardDto:
         ...
 
     class ListResponse(ListResponseDto):
-        results: list["BoardDto.WithModelBaseInfo"] = Field(default=None, description="items", example=[])
+        results: list["BoardDto.WithModelBaseInfo"] = Field(default=None, description="results", example=[])
 
 
 BoardDto.ListResponse.update_forward_refs()

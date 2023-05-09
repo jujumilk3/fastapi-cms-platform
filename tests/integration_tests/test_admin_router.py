@@ -154,3 +154,76 @@ def test_crud_board(client, test_name):
         },
     )
     assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+def test_board_list(client, test_name):
+    # admin user request
+    super_user_bearer_token = create_bearer_token("admin")
+
+    every_created_board_id = []
+
+    # create 10 published boards
+    for i in range(10):
+        response = client.post(
+            "/v1/admin/board",
+            headers={
+                "Authorization": super_user_bearer_token,
+            },
+            json={
+                "display_name": f"test board_{test_name}_{i}",
+                "manage_name": f"test_board_{test_name}_{i}",
+                "is_published": True,
+                "is_admin_only": False,
+                "description": "test board",
+                "main_image": "test image",
+                "background_image": "test image",
+            },
+        )
+        every_created_board_id.append(response.json()["id"])
+        assert response.status_code == status.HTTP_201_CREATED
+
+    # create 10 unpublished boards
+    for i in range(10):
+        response = client.post(
+            "/v1/admin/board",
+            headers={
+                "Authorization": super_user_bearer_token,
+            },
+            json={
+                "display_name": f"test unpublished_board_{test_name}_{i}",
+                "manage_name": f"test_unpublished_board_{test_name}_{i}",
+                "is_published": False,
+                "is_admin_only": False,
+                "description": "test board",
+                "main_image": "test image",
+                "background_image": "test image",
+            },
+        )
+        every_created_board_id.append(response.json()["id"])
+        assert response.status_code == status.HTTP_201_CREATED
+
+    # read without auth
+    response = client.get(
+        "/v1/admin/board",
+    )
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    # read with auth
+    response = client.get(
+        "/v1/admin/board",
+        headers={
+            "Authorization": super_user_bearer_token,
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.json()["results"]) == 20
+
+    # delete every created boards
+    for board_id in every_created_board_id:
+        response = client.delete(
+            f"/v1/admin/board/{board_id}",
+            headers={
+                "Authorization": super_user_bearer_token,
+            },
+        )
+        assert response.status_code == status.HTTP_204_NO_CONTENT

@@ -9,7 +9,7 @@ Basic blog platform built with FastAPI
 ### Board
 - [x] CRUD Board by admin
 - [ ] Get board list by admin (all)
-- [ ] Get board list by user (only published)
+- [x] Get board list by user (only published)
 
 ### Bookmark
 - [ ] CRUD Bookmark
@@ -29,7 +29,7 @@ Basic blog platform built with FastAPI
 - [x] CRUD Post
 
 ### Reaction
-- [ ] CRUD Reaction
+- [x] CRUD Reaction
 - [ ] Get Reacted Contents(Posts, Comments, Replies)
 
 ### Tag
@@ -38,5 +38,5 @@ Basic blog platform built with FastAPI
 ### User
 - [x] signup
 - [x] signin
-- [ ] change password
-- [ ] change profile
+- [x] change password
+- [x] change profile

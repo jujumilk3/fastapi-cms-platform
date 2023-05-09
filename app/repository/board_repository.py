@@ -20,11 +20,12 @@ class BoardRepository(BaseRepository):
         limit: int,
         order: OrderType,
         order_by: str,
+        is_published: bool = None,
     ):
         async with self.session_factory() as session:
-            where_clauses = [
-                Board.is_published == True,
-            ]
+            where_clauses = []
+            if isinstance(is_published, bool):
+                where_clauses.append(Board.is_published == is_published)
             query = (
                 select(Board)
                 .where(*where_clauses)

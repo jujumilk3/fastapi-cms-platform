@@ -1,6 +1,7 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Query
 
+from app.core.constant import OrderType
 from app.core.container import Container
 from app.core.dependency import get_current_super_user
 from app.model.board import BoardDto
@@ -18,6 +19,25 @@ router = APIRouter(
 @inject
 async def iam():
     return {"status": True}
+
+
+@router.get("/board", response_model=BoardDto.ListResponse, status_code=status.HTTP_200_OK)
+@inject
+async def get_board_list(
+    offset: int = Query(default=0),
+    limit: int = Query(default=20),
+    order: OrderType = Query(default=OrderType.DESC),
+    order_by: str = Query(default="id"),
+    board_service: BoardService = Depends(Provide[Container.board_service]),
+):
+    result = await board_service.get_board_list(
+        offset=offset,
+        limit=limit,
+        order=order,
+        order_by=order_by,
+        is_published=None,
+    )
+    return BoardDto.ListResponse(results=result, offset=offset, limit=limit, total=len(result))
 
 
 @router.get("/board/{board_id}", response_model=BoardDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)
