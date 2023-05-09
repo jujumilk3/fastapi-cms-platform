@@ -203,6 +203,16 @@ def test_crud_comment(client, test_name):
     assert response.json()["content"] == "test comment updated"
     assert response.json()["is_deleted"] is False
 
+    # get comment after update
+    response = client.get(
+        f"/v1/comment/{created_comment_id}",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["content_id"] == created_post_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["content"] == "test comment updated"
+    assert response.json()["is_deleted"] is False
+
     # delete comment without sign in
     response = client.delete(
         f"/v1/comment/{created_comment_id}",
