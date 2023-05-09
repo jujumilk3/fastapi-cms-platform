@@ -10,9 +10,7 @@ class BoardService(BaseService):
         self.board_repository = board_repository
         super().__init__(board_repository)
 
-    async def get_board_list(
-        self, offset: int, limit: int, order: OrderType, order_by: str, is_published: bool = None
-    ):
+    async def get_board_list(self, offset: int, limit: int, order: OrderType, order_by: str, is_published: bool = None):
         return await self.board_repository.select_board_list(
             offset=offset,
             limit=limit,
