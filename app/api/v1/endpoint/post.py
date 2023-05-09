@@ -1,5 +1,5 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, status, Path, Query
+from fastapi import APIRouter, Depends, Path, Query, status
 
 from app.core.constant import OrderType
 from app.core.container import Container
@@ -16,16 +16,17 @@ router = APIRouter(
     redirect_slashes=False,
 )
 
+
 @router.get("/{post_id}/comment", response_model=CommentDto.ListResponse, status_code=status.HTTP_200_OK)
 @inject
 async def get_post_comment_list(
-        post_id: int = Path(..., title="post id", description="post id"),
-        offset: int = Query(default=0),
-        limit: int = Query(default=20),
-        order: OrderType = Query(default=OrderType.DESC),
-        order_by: str = Query(default="id"),
-        user_token: str = Depends(get_current_user_token_no_exception),
-        cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
+    post_id: int = Path(..., title="post id", description="post id"),
+    offset: int = Query(default=0),
+    limit: int = Query(default=20),
+    order: OrderType = Query(default=OrderType.DESC),
+    order_by: str = Query(default="id"),
+    user_token: str = Depends(get_current_user_token_no_exception),
+    cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
 ):
     result = await cms_integrated_service.get_comment_list_by_post_id(
         post_id=post_id,
