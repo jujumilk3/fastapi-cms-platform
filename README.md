@@ -8,7 +8,7 @@ Basic blog platform built with FastAPI
 
 ### Board
 - [x] CRUD Board by admin
-- [ ] Get board list by admin (all)
+- [x] Get board list by admin (all)
 - [x] Get board list by user (only published)
 
 ### Bookmark
@@ -18,6 +18,7 @@ Basic blog platform built with FastAPI
 ### Comment
 - [x] CRUD Comment
 - [ ] CRUD Reply
+- [ ] Soft delete
 
 ### Follow
 - [ ] CRUD Follow
@@ -27,6 +28,7 @@ Basic blog platform built with FastAPI
 
 ### Post
 - [x] CRUD Post
+- [ ] Soft delete
 
 ### Reaction
 - [x] CRUD Reaction
