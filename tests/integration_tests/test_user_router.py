@@ -126,7 +126,6 @@ def test_change_profile(client, test_name):
         "/v1/auth/signin",
         json=sign_in_info,
     )
-    print(sign_in_response.json())
     assert sign_in_response.status_code == status.HTTP_200_OK
     assert AuthDto.JWTPayload(**sign_in_response.json())
     assert sign_in_response.json()["access_token"]
