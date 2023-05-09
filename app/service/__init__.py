@@ -9,7 +9,7 @@ from app.service.user_service import UserService
 
 # complex services
 # It should be here to avoid circular import
-from app.service.integrated.blog_integrated_service import BlogIntegratedService  # isort: skip
+from app.service.integrated.cms_integrated_service import CmsIntegratedService  # isort: skip
 
 __all__ = [
     "AuthService",
@@ -20,5 +20,5 @@ __all__ = [
     "ReactionService",
     "UserService",
     "TagService",
-    "BlogIntegratedService",
+    "CmsIntegratedService",
 ]

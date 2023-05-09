@@ -3,7 +3,7 @@ from app.model.comment import Comment, CommentDto
 from app.service import CommentService, PostService, ReactionService, UserService
 
 
-class BlogIntegratedService:
+class CmsIntegratedService:
     def __init__(
         self,
         post_service: PostService,

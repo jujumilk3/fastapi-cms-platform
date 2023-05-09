@@ -1,10 +1,13 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Path, Query
 
+from app.core.constant import OrderType
 from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
+from app.model.comment import CommentDto
 from app.model.post import PostDto
 from app.service import BoardService
+from app.service.integrated.cms_integrated_service import CmsIntegratedService
 from app.service.post_service import PostService
 
 router = APIRouter(
@@ -12,6 +15,26 @@ router = APIRouter(
     tags=["post"],
     redirect_slashes=False,
 )
+
+@router.get("/{post_id}/comment", response_model=CommentDto.ListResponse, status_code=status.HTTP_200_OK)
+@inject
+async def get_post_comment_list(
+        post_id: int = Path(..., title="post id", description="post id"),
+        offset: int = Query(default=0),
+        limit: int = Query(default=20),
+        order: OrderType = Query(default=OrderType.DESC),
+        order_by: str = Query(default="id"),
+        user_token: str = Depends(get_current_user_token_no_exception),
+        cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
+):
+    result = await cms_integrated_service.get_comment_list_by_post_id(
+        post_id=post_id,
+        offset=offset,
+        limit=limit,
+        order=order,
+        order_by=order_by,
+    )
+    return CommentDto.ListResponse(results=result, offset=offset, limit=limit, total=len(result))
 
 
 @router.get("/{post_id}", response_model=PostDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)

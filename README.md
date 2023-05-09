@@ -1,5 +1,5 @@
 # fastapi-cms-platform
-Basic blog platform built with FastAPI
+Basic CMS platform built with FastAPI
 
 ## Feature list
 

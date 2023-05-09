@@ -236,3 +236,74 @@ def test_crud_comment(client, test_name):
         },
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+def test_crud_reply(client, test_name):
+    # admin user request
+    admin_user_bearer_token = create_bearer_token("admin")
+    response = client.post(
+        "/v1/admin/board",
+        headers={
+            "Authorization": admin_user_bearer_token,
+        },
+        json={
+            "display_name": f"test board_{test_name}",
+            "manage_name": f"test_board_{test_name}",
+            "is_published": True,
+            "is_admin_only": False,
+            "description": "test board",
+            "main_image": "test image",
+            "background_image": "test image",
+        },
+    )
+    created_board_manage_name = response.json()["manage_name"]
+    # normal user request
+    normal_user_bearer_token = create_bearer_token("normal")
+    response = client.post(
+        "/v1/post",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "title": f"test post_{test_name}",
+            "content": f"test post_{test_name}",
+            "language": "ko",
+            "is_published": True,
+            "is_private": False,
+            "board_manage_name": created_board_manage_name,
+        },
+    )
+    created_post_id = response.json()["id"]
+    # write comment
+    response = client.post(
+        f"/v1/comment",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_post_id,
+            "content_type": "post",
+            "content": "test comment",
+        },
+    )
+    created_comment_id = response.json()["id"]
+
+    # write reply
+    response = client.post(
+        f"/v1/comment",
+        headers={
+            "Authorization": normal_user_bearer_token,
+        },
+        json={
+            "content_id": created_comment_id,
+            "content_type": "post",
+            "parent_comment_id": created_comment_id,
+            "content": "test reply",
+        },
+    )
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["content_id"] == created_comment_id
+    assert response.json()["content_type"] == "post"
+    assert response.json()["parent_comment_id"] == created_comment_id
+    assert response.json()["content"] == "test reply"
+    assert response.json()["is_deleted"] is False

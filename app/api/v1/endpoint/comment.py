@@ -5,7 +5,7 @@ from app.core.container import Container
 from app.core.dependency import get_current_user_token, get_current_user_token_no_exception
 from app.model.comment import CommentDto
 from app.service.comment_service import CommentService
-from app.service.integrated.blog_integrated_service import BlogIntegratedService
+from app.service.integrated.cms_integrated_service import CmsIntegratedService
 
 router = APIRouter(
     prefix="/comment",
@@ -28,11 +28,11 @@ async def get_comment(
 @inject
 async def create_comment(
     upsert_comment: CommentDto.Upsert,
-    blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
+    cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
     upsert_comment_with_user_token = CommentDto.UpsertWithUserToken(**upsert_comment.dict(), user_token=user_token)
-    return await blog_integrated_service.create_comment_and_update_comment_count(upsert_comment_with_user_token)
+    return await cms_integrated_service.create_comment_and_update_comment_count(upsert_comment_with_user_token)
 
 
 @router.patch("/{comment_id}", response_model=CommentDto.WithModelBaseInfo, status_code=status.HTTP_200_OK)
@@ -53,9 +53,9 @@ async def update_comment(
 @inject
 async def delete_comment(
     comment_id: int,
-    blog_integrated_service: BlogIntegratedService = Depends(Provide[Container.blog_integrated_service]),
+    cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
     user_token: str = Depends(get_current_user_token),
 ):
-    await blog_integrated_service.remove_comment_after_check_user_token_and_update_comment_count(
+    await cms_integrated_service.remove_comment_after_check_user_token_and_update_comment_count(
         comment_id=comment_id, user_token=user_token
     )
