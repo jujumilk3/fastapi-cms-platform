@@ -16,7 +16,7 @@ from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import config
+from app.core.config import configs
 from app.main import app
 from app.model.base_model import Base
 from app.model.user import User
@@ -51,7 +51,7 @@ async def create_tables(engine):
 
 @pytest.fixture(scope="session")
 def client():
-    logger.info(f"config.DB_URL: {config.DB_URL}")
+    logger.info(f"configs.DB_URL: {configs.DB_URL}")
     logger.info("pytest just started")
     logger.info(f"ENV: {os.getenv('ENV')}")
     app.include_router(basic_router_for_test, prefix="/test_only")

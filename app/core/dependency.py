@@ -3,7 +3,7 @@ from fastapi import Depends
 from jose import jwt
 from pydantic import ValidationError
 
-from app.core.config import config
+from app.core.config import configs
 from app.core.container import Container
 from app.core.exception import AuthError, ForbiddenError
 from app.core.security import JWTBearer
@@ -15,7 +15,7 @@ async def get_current_user_token(
     bearer_token: str = Depends(JWTBearer(auto_error=False)),
 ) -> str:
     try:
-        decoded = jwt.decode(bearer_token, config.JWT_SECRET_KEY, algorithms=config.JWT_ALGORITHM)
+        decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         payload = AuthDto.Payload(**decoded)
     except (jwt.JWTError, ValidationError, AttributeError) as e:
         raise AuthError(detail="Could not validate credentials") from e
@@ -40,7 +40,7 @@ async def get_current_user_token_no_exception(
     bearer_token: str = Depends(JWTBearer(auto_error=False)),
 ) -> str:
     try:
-        decoded = jwt.decode(bearer_token, config.JWT_SECRET_KEY, algorithms=config.JWT_ALGORITHM)
+        decoded = jwt.decode(bearer_token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         payload = AuthDto.Payload(**decoded)
     except (jwt.JWTError, ValidationError, AttributeError):
         return ""

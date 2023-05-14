@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from app.core.config import config
+from app.core.config import configs
 from app.core.exception import AuthError
 from app.core.security import create_access_token, get_password_hash, verify_password
 from app.model.user import AuthDto, User, UserDto
@@ -23,7 +23,7 @@ class AuthService(BaseService):
         if not found_user.is_active:
             raise AuthError(detail="Account is not active")
         payload = AuthDto.Payload(**found_user.dict())
-        token_lifespan = timedelta(seconds=config.JWT_ACCESS_EXPIRE)
+        token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
         return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
 
@@ -40,7 +40,7 @@ class AuthService(BaseService):
         user.password = get_password_hash(sing_up_dto.password)
         created_user = await self.user_repository.insert(user)
         payload = AuthDto.Payload(**created_user.dict())
-        token_lifespan = timedelta(seconds=config.JWT_ACCESS_EXPIRE)
+        token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
         return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
 
@@ -56,6 +56,6 @@ class AuthService(BaseService):
             found_user.id, UserDto.Upsert(password=get_password_hash(new_password))
         )
         payload = AuthDto.Payload(**updated_user.dict())
-        token_lifespan = timedelta(seconds=config.JWT_ACCESS_EXPIRE)
+        token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
         return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())

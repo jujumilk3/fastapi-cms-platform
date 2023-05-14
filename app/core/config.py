@@ -9,7 +9,7 @@ class BaseConfig:
     ENV: str = None
     APP_ROOT_DIR: str = Path(__file__).parent.parent.parent
     TEST_DATA_DIR: str = os.path.join(APP_ROOT_DIR, "tests", "data")
-    PROJECT_NAME: str = "techtonic_api"
+    PROJECT_NAME: str = "fastapi-cms-platform"
 
     # api addresses
     API_PREFIX: str = ""
@@ -31,18 +31,21 @@ class BaseConfig:
 
     # database
     DB_URL = "sqlite+aiosqlite:///:memory:"
+    SYNC_DB_URL = "sqlite:///:memory:"
 
 
 class TestConfig(BaseConfig):
     # base
     ENV: str = "test"
     DB_URL = "sqlite+aiosqlite:///:memory:"
+    SYNC_DB_URL = "sqlite:///:memory:"
 
 
 class DevelopConfig(BaseConfig):
     # base
     ENV: str = "dev"
     DB_URL = "sqlite+aiosqlite:///db.sqlite3"
+    SYNC_DB_URL = "sqlite:///db.sqlite3"
 
 
 class StageConfig(BaseConfig):
@@ -56,15 +59,15 @@ class ProductionConfig(BaseConfig):
 
 
 ENV = os.getenv("ENV", None)
-config = BaseConfig()
+configs = BaseConfig()
 
 if ENV == "test":
-    config = TestConfig()
+    configs = TestConfig()
 elif ENV == "dev":
-    config = DevelopConfig()
+    configs = DevelopConfig()
 elif ENV == "stage":
-    config = StageConfig()
+    configs = StageConfig()
 elif ENV == "prod":
-    config = ProductionConfig()
+    configs = ProductionConfig()
 else:
     logger.info("ENV is not set. It will be set to 'BaseConfig'.")

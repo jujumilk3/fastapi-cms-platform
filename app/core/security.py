@@ -5,7 +5,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
 from passlib.context import CryptContext
 
-from app.core.config import config
+from app.core.config import configs
 from app.core.exception import AuthError
 from app.model.user import AuthDto
 
@@ -16,9 +16,9 @@ def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = N
     if expires_delta:
         expiration = (datetime.utcnow() + expires_delta).timestamp()
     else:
-        expiration = (datetime.utcnow() + timedelta(seconds=config.JWT_ACCESS_EXPIRE)).timestamp()
+        expiration = (datetime.utcnow() + timedelta(seconds=configs.JWT_ACCESS_EXPIRE)).timestamp()
     payload = {"expiration": int(expiration), **user_info.dict()}
-    encoded_jwt = jwt.encode(payload, config.JWT_SECRET_KEY, algorithm=config.JWT_ALGORITHM)
+    encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
     return {"access_token": encoded_jwt, "expiration": expiration}
 
 
@@ -32,7 +32,7 @@ def get_password_hash(password: str) -> str:
 
 def decode_jwt(token: str) -> dict:
     try:
-        decoded_token = jwt.decode(token, config.JWT_SECRET_KEY, algorithms=config.JWT_ALGORITHM)
+        decoded_token = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         return decoded_token if decoded_token["expiration"] >= int(round(datetime.utcnow().timestamp())) else None
     except Exception:
         return {}

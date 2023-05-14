@@ -1,7 +1,7 @@
 from dependency_injector import containers, providers
 
 from app import repository, service
-from app.core.config import config
+from app.core.config import configs
 from app.core.database import Database
 
 
@@ -20,7 +20,7 @@ class Container(containers.DeclarativeContainer):
             "app.api.v1.endpoint.user",
         ]
     )
-    db = providers.Singleton(Database, db_url=config.DB_URL)
+    db = providers.Singleton(Database, db_url=configs.DB_URL, sync_db_url=configs.SYNC_DB_URL)
 
     # Base repositories
     board_repository = providers.Factory(repository.BoardRepository, session_factory=db.provided.session_factory)
