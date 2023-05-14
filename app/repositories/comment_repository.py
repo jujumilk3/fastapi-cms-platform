@@ -21,10 +21,10 @@ class CommentRepository(BaseRepository):
                 .filter(
                     Comment.content_id == post_id,
                     Comment.content_type == ContentType.POST,
-            )
-            .order_by(Comment.created_at.desc())
-            .offset(offset)
-            .limit(limit)
+                )
+                .order_by(Comment.created_at.desc())
+                .offset(offset)
+                .limit(limit)
             )
             query_result = await session.execute(query)
             return query_result.scalars().all()
