@@ -24,10 +24,14 @@ class Container(containers.DeclarativeContainer):
 
     # Base repositories
     board_repository = providers.Factory(repositories.BoardRepository, session_factory=db.provided.session_factory)
-    bookmark_repository = providers.Factory(repositories.BookmarkRepository, session_factory=db.provided.session_factory)
+    bookmark_repository = providers.Factory(
+        repositories.BookmarkRepository, session_factory=db.provided.session_factory
+    )
     comment_repository = providers.Factory(repositories.CommentRepository, session_factory=db.provided.session_factory)
     post_repository = providers.Factory(repositories.PostRepository, session_factory=db.provided.session_factory)
-    reaction_repository = providers.Factory(repositories.ReactionRepository, session_factory=db.provided.session_factory)
+    reaction_repository = providers.Factory(
+        repositories.ReactionRepository, session_factory=db.provided.session_factory
+    )
     tag_repository = providers.Factory(repositories.TagRepository, session_factory=db.provided.session_factory)
     user_repository = providers.Factory(repositories.UserRepository, session_factory=db.provided.session_factory)
 
