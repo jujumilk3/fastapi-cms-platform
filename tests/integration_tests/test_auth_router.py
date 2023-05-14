@@ -1,6 +1,6 @@
 from fastapi import status
 
-from app.model.user import AuthDto
+from app.models.user import AuthDto
 
 
 def test_sign_up_and_sign_in(client):

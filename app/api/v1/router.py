@@ -1,15 +1,15 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoint.admin import router as admin_router
-from app.api.v1.endpoint.auth import router as auth_router
-from app.api.v1.endpoint.board import router as board_router
-from app.api.v1.endpoint.bookmark import router as bookmark_router
-from app.api.v1.endpoint.comment import router as comment_router
-from app.api.v1.endpoint.debug import router as debug_router
-from app.api.v1.endpoint.post import router as post_router
-from app.api.v1.endpoint.reaction import router as reaction_router
-from app.api.v1.endpoint.tag import router as tag_router
-from app.api.v1.endpoint.user import router as user_router
+from app.api.v1.endpoints.admin import router as admin_router
+from app.api.v1.endpoints.auth import router as auth_router
+from app.api.v1.endpoints.board import router as board_router
+from app.api.v1.endpoints.bookmark import router as bookmark_router
+from app.api.v1.endpoints.comment import router as comment_router
+from app.api.v1.endpoints.debug import router as debug_router
+from app.api.v1.endpoints.post import router as post_router
+from app.api.v1.endpoints.reaction import router as reaction_router
+from app.api.v1.endpoints.tag import router as tag_router
+from app.api.v1.endpoints.user import router as user_router
 
 routers = APIRouter()
 router_list = [

@@ -1,6 +1,6 @@
 from fastapi import status
 
-from app.model.user import AuthDto
+from app.models.user import AuthDto
 from tests.utils.common import create_bearer_token
 
 

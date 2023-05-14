@@ -7,8 +7,8 @@ from app.core.config import configs
 from app.core.container import Container
 from app.core.exception import AuthError, ForbiddenError
 from app.core.security import JWTBearer
-from app.model.user import AuthDto, User
-from app.service.user_service import UserService
+from app.models.user import AuthDto, User
+from app.services.user_service import UserService
 
 
 async def get_current_user_token(

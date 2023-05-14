@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_scoped_session, create_as
 from sqlalchemy.orm import Session, scoped_session, sessionmaker
 
 from app.core.config import configs
-from app.model.base_model import Base
+from app.models.base_model import Base
 
 
 class Database:

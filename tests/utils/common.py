@@ -2,7 +2,7 @@ import json
 
 from app.core.config import configs
 from app.core.security import create_access_token
-from app.model.user import AuthDto
+from app.models.user import AuthDto
 
 
 def create_bearer_token(test_user_email: str) -> str:
