@@ -1,11 +1,11 @@
 from asyncio import current_task
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, Session, sessionmaker
-from app.model.base_model import Base
 from sqlalchemy.ext.asyncio import AsyncSession, async_scoped_session, create_async_engine
+from sqlalchemy.orm import Session, scoped_session, sessionmaker
 
 from app.core.config import configs
+from app.model.base_model import Base
 
 
 class Database:
