@@ -23,8 +23,8 @@ async def get_post_comment_list(
     post_id: int = Path(..., title="post id", description="post id"),
     offset: int = Query(default=0),
     limit: int = Query(default=20),
-    order: OrderType = Query(default=OrderType.DESC),
-    order_by: str = Query(default="id"),
+    # order: OrderType = Query(default=OrderType.DESC),
+    # order_by: str = Query(default="id"),
     user_token: str = Depends(get_current_user_token_no_exception),
     cms_integrated_service: CmsIntegratedService = Depends(Provide[Container.cms_integrated_service]),
 ):
@@ -32,8 +32,8 @@ async def get_post_comment_list(
         post_id=post_id,
         offset=offset,
         limit=limit,
-        order=order,
-        order_by=order_by,
+        # order=order,
+        # order_by=order_by,
     )
     return CommentDto.ListResponse(results=result, offset=offset, limit=limit, total=len(result))
 

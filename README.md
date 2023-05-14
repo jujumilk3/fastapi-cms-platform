@@ -17,8 +17,10 @@ Basic CMS platform built with FastAPI
 
 ### Comment
 - [x] CRUD Comment
-- [ ] CRUD Reply
+- [ ] CRUD Reply: WIP
 - [ ] Soft delete
+- [ ] Comment list of post: WIP
+- [ ] Reply list of comment
 
 ### Follow
 - [ ] CRUD Follow

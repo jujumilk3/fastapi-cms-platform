@@ -39,3 +39,6 @@ class CmsIntegratedService:
         await self.reaction_service.remove_by_id_after_check_user_token(model_id=reaction_id, user_token=user_token)
         if found_reaction.content_type == ContentType.POST:
             await self.post_service.update_reaction_count(found_reaction.content_id)
+
+    async def get_comment_list_by_post_id(self, post_id: int, offset: int, limit: int):
+        return await self.comment_service.get_list_by_post_id(post_id=post_id, offset=offset, limit=limit)
