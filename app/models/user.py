@@ -68,11 +68,12 @@ class AuthDto:
         user_token: str
 
     class JWTPayload(BaseModel):
-        email: str
-        nickname: str
-        user_token: str
-        access_token: str
-        expiration: int
+        email: str = Field(..., title="email", description="email")
+        nickname: str = Field(default=None, title="nickname", description="nickname")
+        user_token: str = Field(..., title="user_token", description="user_token")
+        access_token: str = Field(..., title="access_token", description="access_token")
+        expiration: int = Field(..., title="expiration", description="expiration")
+        profile_image_url: str = Field(default=None, title="profile_image_url", description="profile_image_url")
 
     class SignUp(BaseModel):
         email: str = Field(nullable=False, example="test@test.com")
@@ -82,8 +83,3 @@ class AuthDto:
     class SignIn(BaseModel):
         email: str = Field(nullable=False, example="test@test.com")
         password: str = Field(nullable=False, example="test1234")
-
-    class SignInResponse(BaseModel):
-        access_token: str
-        expiration: int
-        user_info: UserBaseInfoDto
