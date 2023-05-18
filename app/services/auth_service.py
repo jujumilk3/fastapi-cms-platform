@@ -25,7 +25,7 @@ class AuthService(BaseService):
         payload = AuthDto.Payload(**found_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
-        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], exp=jwt["exp"], **payload.dict())
 
     async def sign_up(self, sing_up_dto: AuthDto.SignUp) -> AuthDto.JWTPayload:
         user_token = random_hash(length=12)
@@ -42,7 +42,7 @@ class AuthService(BaseService):
         payload = AuthDto.Payload(**created_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
-        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], exp=jwt["exp"], **payload.dict())
 
     async def change_password(self, old_password: str, new_password: str, new_password_confirm: str, user_token: str):
         found_user = await self.user_repository.select_user_by_user_token(user_token)
@@ -58,4 +58,4 @@ class AuthService(BaseService):
         payload = AuthDto.Payload(**updated_user.dict())
         token_lifespan = timedelta(seconds=configs.JWT_ACCESS_EXPIRE)
         jwt = create_access_token(payload, token_lifespan)
-        return AuthDto.JWTPayload(access_token=jwt["access_token"], expiration=jwt["expiration"], **payload.dict())
+        return AuthDto.JWTPayload(access_token=jwt["access_token"], exp=jwt["exp"], **payload.dict())
