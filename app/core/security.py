@@ -12,7 +12,7 @@ from app.models.user import AuthDto
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> (str, str):
+def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> dict[str, str]:
     if expires_delta:
         expiration = (datetime.utcnow() + expires_delta).timestamp()
     else:
