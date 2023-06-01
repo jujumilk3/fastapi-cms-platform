@@ -26,6 +26,8 @@ Basic CMS platform built with FastAPI
 - [ ] Soft delete
 - [ ] Comment list of post: WIP
 - [ ] Reply list of comment
+- [ ] Soft delete if there is concerned contents like comment, reply, reaction
+- [ ] Hard delete if there is no concerned contents
 
 ### Follow
 
@@ -37,7 +39,8 @@ Basic CMS platform built with FastAPI
 ### Post
 
 - [x] CRUD Post
-- [ ] Soft delete
+- [ ] Soft delete if there is concerned contents like comment, reply, reaction
+- [ ] Hard delete if there is no concerned contents
 
 ### Reaction
 
@@ -51,6 +54,7 @@ Basic CMS platform built with FastAPI
 ### User
 
 - [x] signup
+- [ ] nickname duplication check
 - [x] signin
 - [x] change password
 - [x] change profile
