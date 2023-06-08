@@ -37,16 +37,17 @@ def test_name(request):
 
 
 @pytest_asyncio.fixture
-async def simple_fixture():
+async def simple_async_fixture():
+    logger.info("simple_async_fixture called")
+    logger.info(f"simple_async_fixture id: {(id(simple_async_fixture))}")
+    yield "simple_async_fixture"
+
+
+@pytest.fixture
+def simple_fixture():
     logger.info("simple_fixture called")
     logger.info(f"simple_fixture id: {(id(simple_fixture))}")
-    yield "simple_fixture"
-
-
-async def create_tables(engine):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-        await insert_default_test_data(conn)
+    return "simple_fixture"
 
 
 @pytest.fixture(scope="session")
@@ -56,8 +57,29 @@ def client():
     logger.info(f"ENV: {os.getenv('ENV')}")
     app.include_router(basic_router_for_test, prefix="/test_only")
     logger.info("client fixture started")
+    db_url = str(app.container.db().engine.url)
+    if "sqlite" not in db_url:
+        pytest.exit(f"db_url is not sqlite, it is {db_url}")
+    if configs.DB_URL != db_url:
+        pytest.exit(f"db_url is not {configs.DB_URL}, it is {db_url}")
     asyncio.run(create_tables(app.db.engine))
     yield TestClient(app)
+
+
+@pytest.fixture(scope="session")
+def db_url():
+    db_url = str(app.container.db().engine.url)
+    if "sqlite" not in db_url:
+        pytest.exit(f"db_url is not sqlite, it is {db_url}")
+    if configs.DB_URL != db_url:
+        pytest.exit(f"db_url is not {configs.DB_URL}, it is {db_url}")
+    return db_url
+
+
+async def create_tables(engine):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+        await insert_default_test_data(conn)
 
 
 async def insert_default_test_data(conn):
