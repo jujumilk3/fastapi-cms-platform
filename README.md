@@ -57,8 +57,8 @@ No time zone. Every thing handled as UTC.
 ### User
 
 - [x] signup
-- [ ] nickname duplication check
+- [ ] ~~nickname duplication check~~
 - [x] signin
 - [x] change password
 - [x] change profile
-- [ ] issue refresh token and refresh access token
+- [x] issue refresh token and refresh access token
