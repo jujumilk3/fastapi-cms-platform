@@ -1,6 +1,9 @@
 # fastapi-cms-platform
 
-Basic CMS platform built with FastAPI
+## Description
+
+Basic CMS platform built with FastAPI.
+No time zone. Every thing handled as UTC.
 
 ## Feature list
 

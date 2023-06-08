@@ -17,6 +17,7 @@ def test_change_password(client):
     assert sign_up_response.status_code == status.HTTP_201_CREATED
     assert AuthDto.JWTPayload(**sign_up_response.json())
     assert sign_up_response.json()["access_token"]
+    assert sign_up_response.json()["refresh_token"]
     assert sign_up_response.json()["exp"]
     assert sign_up_response.json()["email"] == sign_up_info["email"]
     assert sign_up_response.json()["nickname"] == sign_up_info["nickname"]
@@ -33,6 +34,7 @@ def test_change_password(client):
     assert sign_in_response.status_code == status.HTTP_200_OK
     assert AuthDto.JWTPayload(**sign_in_response.json())
     assert sign_in_response.json()["access_token"]
+    assert sign_up_response.json()["refresh_token"]
     assert sign_in_response.json()["exp"]
     assert sign_in_response.json()["email"] == sign_up_info["email"]
     assert sign_in_response.json()["nickname"] == sign_up_info["nickname"]
@@ -94,6 +96,7 @@ def test_change_password(client):
     assert sign_in_response.status_code == status.HTTP_200_OK
     assert AuthDto.JWTPayload(**sign_in_response.json())
     assert sign_in_response.json()["access_token"]
+    assert sign_up_response.json()["refresh_token"]
     assert sign_in_response.json()["exp"]
     assert sign_in_response.json()["email"] == sign_up_info["email"]
     assert sign_in_response.json()["nickname"] == sign_up_info["nickname"]
@@ -113,6 +116,7 @@ def test_change_profile(client, test_name):
     assert sign_up_response.status_code == status.HTTP_201_CREATED
     assert AuthDto.JWTPayload(**sign_up_response.json())
     assert sign_up_response.json()["access_token"]
+    assert sign_up_response.json()["refresh_token"]
     assert sign_up_response.json()["exp"]
     assert sign_up_response.json()["email"] == sign_up_info["email"]
     assert sign_up_response.json()["nickname"] == sign_up_info["nickname"]
@@ -129,6 +133,7 @@ def test_change_profile(client, test_name):
     assert sign_in_response.status_code == status.HTTP_200_OK
     assert AuthDto.JWTPayload(**sign_in_response.json())
     assert sign_in_response.json()["access_token"]
+    assert sign_up_response.json()["refresh_token"]
     assert sign_in_response.json()["exp"]
     assert sign_in_response.json()["email"] == sign_up_info["email"]
     assert sign_in_response.json()["nickname"] == sign_up_info["nickname"]

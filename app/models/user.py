@@ -72,6 +72,7 @@ class AuthDto:
         nickname: str = Field(default=None, title="nickname", description="nickname")
         user_token: str = Field(..., title="user_token", description="user_token")
         access_token: str = Field(..., title="access_token", description="access_token")
+        refresh_token: str = Field(..., title="refresh_token", description="refresh_token")
         exp: int = Field(..., title="exp", description="exp")
 
     class SignUp(BaseModel):

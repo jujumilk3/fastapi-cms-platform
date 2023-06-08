@@ -22,6 +22,16 @@ def create_access_token(user_info: AuthDto.Payload, expires_delta: timedelta = N
     return {"access_token": encoded_jwt, "exp": expiration}
 
 
+def create_refresh_token(user_info: AuthDto.Payload, expires_delta: timedelta = None) -> dict[str, str]:
+    if expires_delta:
+        expiration = (datetime.utcnow() + expires_delta).timestamp()
+    else:
+        expiration = (datetime.utcnow() + timedelta(seconds=configs.JWT_REFRESH_EXPIRE)).timestamp()
+    payload = {"exp": int(expiration), **user_info.dict()}
+    encoded_jwt = jwt.encode(payload, configs.JWT_SECRET_KEY, algorithm=configs.JWT_ALGORITHM)
+    return {"refresh_token": encoded_jwt, "exp": expiration}
+
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -35,7 +45,7 @@ def decode_jwt(token: str) -> dict:
         decoded_token = jwt.decode(token, configs.JWT_SECRET_KEY, algorithms=configs.JWT_ALGORITHM)
         return decoded_token if decoded_token["exp"] >= int(round(datetime.utcnow().timestamp())) else None
     except Exception:
-        return {}
+        return None
 
 
 class JWTBearer(HTTPBearer):
